@@ -1,0 +1,2320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/testcat.css" />
+
+</head>
+
+<body>
+    <div class="container" id="box">
+        <!-- Instructions -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">×</span>
+                    <h2>Instructions</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <ol type="1" style="font-size: 18px; text-align: justify;color:black">
+                            <li>Provide a value for each attribute and then click the <b>ADD</b> button to input these values into the table.</li>
+                            <li>Repeat step 1 until the trained dataset contains a total of 6 rows.</li>
+                            <li>Now, enter a value for each attribute to test the algorithm, and then click the <b>ADD</b> button.</li>
+                            <li>Now, click on the the<b>NEXT</b> button to initiate the computation phase for the Naive Bayes model.</li>
+                            <li>Please enter the correct number of occurrences for the 'YES' and 'NO' fields based on the <b>OBSERVATION</b> table and click on <b>SUBMIT</b> button.</li>
+                            <li>Now, click on the <b>NEXT</b> button to calculate <span style="color:#FF6600">Likelihood Probabilities</span>.</li>
+                            <li>Enter the occurrences of each attribute based on their classes in the 'YES' column of the <b>CALCULATION</b> table, and then click the <b>SUBMIT</b> button.</li>
+                            <li>Repeat step 7 for the 'NO' column and click on the<b>NEXT</b> button.</li>
+                            <li>If, zero values are present for any likelihood probability, the <b>Laplace Smoothing</b> section will appear.</li>
+                            <li>Otherwise, calculate the <span style="color:#FF6600">Posterior Probabilities</span> by entering the required fields for <b>P(YES|NEW INSTANCE)</b> and then click on the <b>SUBMIT</b> button.</li>
+                            <ul>
+                                <li>Click on the 'Prior Probability' tab given on the left side of the page to view the required values.</li>
+                                <li>Next, click on the 'Likelihood Probability' tab and and observe the necessary values.</li>
+                            </ul>
+                            <li>Repeat the above step to find <b>P(NO|NEW INSTANCE)</b>.</li>
+                            <li>After submitting their values, click on <b>NEXT</b> button to know the final result.</li>
+                        </ol></p>
+                </div>
+                <div class="modal-footer">
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <!-- header -->
+        <header class="header">
+            <div class="tabs">
+                <!-- tabs -->
+                <div id="tab-1"
+                    style="display: flex; border-right: 2px solid black; color: white; cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+                        CREATE
+                    </div>
+                    <img src="images/create.png" style="margin-top: 3px; margin-right: 10px; height: 85%" alt="">
+
+                </div>
+                <div id="tab-2" style="display: flex; border-right: 2px solid black; color: black; background-color: #e0e0e0;font-weight: bold;cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+
+                       COMPUTE
+                    </div>
+                
+                    <img id="calimg" src="images/calculator1.png"
+                        style="margin-top: 3px; margin-right: 10px; height: 85%;cursor:not-allowed;" id="calImg" alt="">
+                </div>
+                <div id="tab-3"
+                    style="display: flex; border-right: 2px solid black; color: white; cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+                        ANALYZE
+                    </div>
+                    <img id="anaimg" src="images/analyse.png" style="margin-top: 3px; margin-right: 10px; height: 85%" alt="">
+
+                </div>
+                
+            </div>
+            <a class="header-text" id="myBtn" style="padding-top: 8px" href="#">INSTRUCTIONS</a>
+        </header>
+        <div class="sec-con-container" id="finalshow" style="display: none;">
+            <div class="sec-con-column" id="finale1"></div>
+            <div class="sec-con-table" id="finale2"></div>
+        </div>
+        <div class="sec-con-container">
+            <div class="sec-con-column" id=finalhide>
+                <!-- controls -->
+                <div class="training-left-side-container">
+                    <div class="sub-div-control" id="training-control" >
+                        <header id="trainToTest" class="header-box">OBSERVATION TABLE</header>
+                        <div id="tablesContainer" >
+                            
+                            <table id="dataPointsTable" style="height: 385px;">
+                                <thead style="height: 385px;">
+                                    <tr style="  background-color: #e0e0e0;color:black">
+                                        <th>S.No</th>
+                                        <th>COLOR</th>
+                                        <th>TYPE</th>
+                                        <th>ORIGIN</th>
+                                        <th>STOLEN</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody id="for11">
+                                    <!-- Data point coordinates will be dynamically populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="divcedshow" style="display: none;flex-direction: row; justify-content: space-around; margin-top: 5px;">
+                        <div class="warpper">
+                            <input class="radio" id="one" name="group" type="radio" onclick="addprior()">
+                            <input class="radio" id="two" name="group" type="radio" onclick="addlikelihood()">
+                            
+                          
+                            <div class="tabuler">
+                              <label class="tab" id="one-tab" for="one">PRIOR PROBABILITY</label>
+                              <label class="tab" id="two-tab" for="two">LIKELIHOOD PROBABILITY</label>
+                
+                            </div>
+                        </div>
+                        </div>
+
+                        <div id="divcshow" style="display: none; align-items: center; justify-content: center; height: 360px; margin:0 auto; flex-direction: column;"></div>
+                        <!-- <div class="control-panel">
+                        </div> -->
+                    </div>
+                    <diV class="sub-div-formula">
+                        <header class="header-box">FORMULAE</header>
+
+                        <div style="display: flex; flex-direction: row;  ">
+
+                            <div class="warpper2" style="display: flex; flex-direction: column;   height: 160px; overflow-y:scroll;overflow-x: hidden; text-align: center;width: 18%;">
+                                <input  class="radio" id="six" name="group" type="radio" onclick="priorf()">
+                                <input  class="radio" id="five" name="group" type="radio" onclick="naivebayes()">
+                                <input class="radio" id="three" name="group" type="radio" onclick="ndb()">
+                                <input class="radio" id="four" name="group" type="radio" onclick="LS()">
+
+                                <div class="tabuler2">
+                                    <label class="tab2" id="six-tab" for="six" style="width: 50%; margin-top: 2px;">Prior Probability</label>
+                                    <label class="tab2" id="five-tab" for="five" style="width: 50%; margin-top: 2px;">Bayes Theorem</label>
+                    
+                                    <label class="tab2" id="three-tab" for="three" style="width: 50%;;margin-top: 2px;">Posterior Probability</label>
+                                    <label class="tab2" id="four-tab" for="four" style="width:50%;;margin-top: 2px;">Laplace Smoothing</label>
+                                    </div>
+                                <script>
+                                     function priorf()
+            {
+                let temp=document.getElementById("forformule")
+                temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">P(A) </span> =
+                                    <math style="font-weight: bold; font-size: 25px; ">
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>Number of A (occurrence)</mn>
+                                            </mrow>
+                                            <mn>N</mn>
+                                        </mfrac>
+                                    </math> 
+                                </div>  <br>
+                                <div style=" padding-left: 10px; font-size: medium; ">
+                                   <span style="color:#FF6600">where,</span><br>
+                                    <b>A</b> = event,<br>
+                                    <b>N</b> = total observation (trained).
+                                    
+                                </div>`
+            }
+                                    function naivebayes(){
+                                        let temp=document.getElementById("forformule")
+                                        temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">P(C|X) </span> = <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                  <mrow>
+                                    <mn> (P(C) * P(X|C))
+                                        </mn>
+                                  </mrow>
+                                  <mn>P(X)</mn>
+                                </mfrac>
+                            </math> </div><br>
+                            <div style=" padding-left: 10px; font-size: medium; ">
+                                <span style="color:#FF6600">where,</span><br>
+                                <b>P(C|X)</b> = conditional probability of event or condition C given event or condition X,<br>
+                                <b>P(X|C)</b> =  conditional probability of event or condition X given event or condition C,<br>
+                                <b>P(C)</b> = Probability of condition C,<br>
+                                <b>P(X)</b> =Probability of condition X.</div>`
+                                
+                                    }
+
+                                    function ndb(){
+                                        let temp=document.getElementById("forformule")
+                                        temp.innerHTML=`<div style="font-weight: bold;  font-size: medium; "><span style="color:#FF6600">P(YES|NEW INSTANCE) </span>  = P(YES)*P(COLOR|YES)*P(TYPE|YES)*P(ORIGIN|YES)<br><br>
+                                            <span style="color:#FF6600">P(NO|NEW INSTANCE) </span>  = P(NO)*P(COLOR|NO)*P(TYPE|NO)*P(ORIGIN|NO) </div> <br>
+                            <div style=" padding-left: 10px; font-size: medium; ">
+           \
+                        </div>`
+                           
+                                    }
+                                    function LS(){
+                                        let temp=document.getElementById("forformule")
+                                        
+                                        temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">P(X|C) </span> = <math style="font-weight: bold; font-size: 25px; ">
+                                            P_smoothed(feature|class) = <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                  <mrow>
+                                    <mn>(count(feature, class) + 1) </mn>
+                                    <mn></mn>
+                                  </mrow>
+                                  <mn> (count(class) + V)</mn>
+                                </mfrac>
+                            </math>
+</div>
+
+<div style=" padding-left: 10px; font-size: medium; ">
+    <span style="color:#FF6600">where,</span><br>
+<b>P_smoothed(feature|class)</b> = smoothed conditional probability of the feature given the class,<br>
+    <b>count(feature,class)</b> = count of occurrences of the feature with the specific class in the training data,<br>
+        <b>count(class)</b> = count of occurrences of the class in the training data,<br>
+            <b>V</b> = number of unique feature values for the given feature.<br><div>`
+                                    }
+                                </script>
+                            </div>
+                           
+                            <div id="forformule" style="display: flex; align-items: center; justify-content: center; margin:0 auto; height: 160px; flex-direction: column;">
+                               
+
+                            </div>
+                            
+                        </div>
+                    
+                    </diV>
+                    
+                </div>
+            </div>
+
+            <!-- table -->
+            <div class="sec-con-table" id=finalhide2>
+                <div class="sub-div-table" id="fortarget">
+                    <header id=calculation class="header-box">PRIOR PROBABILITY</header>
+                    <div id="divte" style="display: none;"></div>
+                    <div id="firsttable" style=" height: fit-content; position: relative; margin-top: 130px; ">
+
+                        <div id=addind style="margin-left: 150px; width: 170px;"><b>P(YES)</b> = 
+                            
+                            <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="10" min="0" type="number" id=addin style="width: 50px;text-align: center; "/></mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+                                                      
+                            
+                         </div>
+                        <br>
+                        <div id=negind style="margin-left: 150px; margin-top: 20px; width: 160px;"> <b>P(NO)</b> = 
+                            
+                            <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="10" min="0" type="number" id=negin style="width: 50px; text-align: center;"/> </mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+                            
+                          </div>
+
+                </div>
+                    <table id="secondtable">
+                        <tr>
+                            <td rowspan="2"><b>S.No</b></td>
+                            <td rowspan="2" colspan="2"><b>FEATURES</b></td>
+                            <td colspan="2"><b>STOLEN</b>
+                                <tr>
+                                    <td><b>YES</b></td>
+                                    <td><b>NO<b></td>
+                                </tr>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td rowspan="2">COLOR</td>
+                            <td id >Black</td>
+                            <td id= addinc1 class="yes"><input id= addin1 max="10" min="0" type="number" style="width: 30px; text-align: center;"> /</td>
+                            <td id="neginc1" class="no"><input id="negin1" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Brown</td>
+                            <td id= addinc2 class="yes"><input id= addin2 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc2" class="no"><input id="negin2" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td rowspan="2">TYPE</td>
+                            <td>MUV</td>
+                            <td id= addinc3 class="yes"><input id= addin3 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc3" class="no"><input id="negin3" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>SUV</td>
+                            <td id= addinc4 class="yes"><input id= addin4 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc4" class="no"><input id="negin4" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td rowspan="2">ORIGIN</td>
+                            <td>Domestic</td>
+                            <td id= addinc5 class="yes"><input id= addin5 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc5" class="no"><input id="negin5" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Imported</td>
+                            <td id= addinc6 class="yes"><input id= addin6 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc6" class="no"><input id="negin6" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="position:absolute;bottom: 200px; right: 50px; "><button id=submittotable class="button" onclick="tosubmitadd()">SUBMIT</button></div>
+                <div style="position:absolute;bottom: 125px; right: 50px; "><button disabled=true id=nexttotable class="button" onclick="tonextt1()" style="cursor:not-allowed;text-align: center;">NEXT</button></div>
+               
+            </div> <div id =retb style="position:absolute;bottom: 50px; right: 50px; "><button id=resettable class="button" title="clears the inputted value." onclick="toreset()">RESET</button></div>
+        </div>
+
+        <!-- footer -->
+        <footer class="footer">
+            <span class="footer-text">© 2023 Virtual Labs, IIT Roorkee</span>
+        </footer>
+        <script>
+           let target_dict,new_instance_yes,new_instance_no;
+       let foryes=0
+       let forno=-1
+
+
+       let foryesc=0
+       let fornoc=-1
+
+
+        var serializedData = localStorage.getItem('objectToPass'); // Retrieve the serialized table data from localStorage
+       var tableData = JSON.parse(serializedData);
+        var table = document.getElementById('dataPointsTable');
+let todisable=document.getElementsByClassName("no")
+let addlike = -1
+
+// Reconstruct the table by iterating through the tableData array
+for (var i = 0; i < tableData.length; i++) {
+  var rowData = tableData[i];
+  if(rowData[4]=="Yes"){
+  var row = table.insertRow(1);
+  foryes=foryes+1;
+  foryesc=foryesc+1;
+  row.classList.add("tocheck")
+  }
+  else{
+    var row = table.insertRow(-1);
+    row.classList.add("tocheck")
+    forno=forno+1
+    fornoc=fornoc+1
+  
+
+  }
+  // Iterate through each property of the row data object
+  row[0]=i
+
+  for (var columnName in rowData) {
+    var cell = row.insertCell();
+
+    cell.textContent = rowData[columnName];
+  }
+}
+var rl = document.getElementsByClassName('tocheck');
+
+rl[6].style.backgroundColor="#ffc198"
+rl[6].style.color="black"
+rl[6].id='TOBOLD'
+
+for(let i=0;i<rl.length;i++){
+    rl[i].cells[0].innerHTML=i+1
+    
+}
+var tobold=document.getElementById("TOBOLD")
+for(let i=0;i<5;i++){
+    tobold.cells[i].innerHTML=`<b>${tobold.cells[i].innerHTML}</b>`
+    
+}
+
+
+var toadd_denom=document.getElementsByClassName("yes")
+for(let i=0;i<toadd_denom.length;i++){
+    toadd_denom[i].innerHTML=toadd_denom[i].innerHTML+`${foryesc}`
+    
+}
+var toadd_denom=document.getElementsByClassName("no")
+for(let i=0;i<toadd_denom.length;i++){
+    toadd_denom[i].innerHTML=toadd_denom[i].innerHTML+`${fornoc}`
+    
+}
+
+
+let for61 =0;
+let for62 =0;
+let for41 =0;
+let for42 =0;
+let for51=0
+let for52 =0;
+let for11=0
+let for12=0
+let for21=0
+let for22=0
+let for31=0
+let for32=0
+let pyes,pno;
+
+
+
+
+let item1="Black ,"
+let item2="Brown ,"
+let item3="MUV ,"
+let item4="SUV ,"
+let item5="Domestic ,"
+let item6="Imported ,"
+let thficount=0
+
+let uncheck3=document.getElementById("three")
+let uncheck4=document.getElementById("four")
+let uncheck5=document.getElementById("five")
+let uncheck6=document.getElementById("six")
+for (var i = 0; i < tableData.length-1; i++) {
+  var rowData = tableData[i];
+
+  if(rowData[1]=="Black" && rowData[4]=="Yes"){
+    for11=for11+1}
+    if(rowData[1]=="Black" && rowData[4]=="No"){
+    for12=for12+1}
+
+    if(rowData[1]=="Brown" && rowData[4]=="Yes"){
+    for21=for21+1}
+    if(rowData[1]=="Brown" && rowData[4]=="No"){
+    for22=for22+1}
+
+    if(rowData[2]=="MUV" && rowData[4]=="Yes"){
+    for31=for31+1}
+    if(rowData[2]=="MUV" && rowData[4]=="No"){
+    for32=for32+1}
+
+    if(rowData[2]=="SUV" && rowData[4]=="Yes"){
+    for41=for41+1}
+    if(rowData[2]=="SUV" && rowData[4]=="No"){
+    for42=for42+1}
+
+    if(rowData[3]=="Domestic" && rowData[4]=="Yes"){
+    for51=for51+1}
+    if(rowData[3]=="Domestic" && rowData[4]=="No"){
+    for52=for52+1}
+
+    if(rowData[3]=="Imported" && rowData[4]=="Yes"){
+    for61=for61+1}
+    if(rowData[3]=="Imported" && rowData[4]=="No"){
+    for62=for62+1}
+
+}
+
+for(let i=0;i<6;i++){
+            if(eval("for"+(i+1)+'1')==0){
+            let toenable= document.getElementById("addin"+(i+1))
+        toenable.disabled=true
+    toenable.style.cursor="not-allowed"}}
+
+function tosubmitadd(){
+    let count=0
+    let c=''
+    let a=true;
+    let temp=parseInt(document.getElementById("addin").value)
+    let temp2=parseInt(document.getElementById("negin").value)
+    let temp_1=document.getElementById("addin")
+    let temp_2=document.getElementById("negin")
+    if (isNaN(temp)==false && isNaN(temp2)==false){
+    if(temp==foryes && temp2==forno){
+        if (forno==0){
+    forno=0.00000000001
+}
+if (foryes==0){
+    foryes=0.00000000001
+}
+
+pyes=foryes/6
+pno=forno/6
+        let temp3= document.getElementById("addind")
+            temp3.innerHTML= '<b>'+(temp3.innerText).slice(0,9)+'</b>'+(pyes).toFixed(3)
+            let temp4= document.getElementById("negind")
+            temp4.innerHTML= '<b>'+(temp4.innerText).slice(0,8)+'</b>'+(pno).toFixed(3)
+            let temp5= document.getElementById("nexttotable")
+            temp5.disabled=false
+            temp5.style.cursor="pointer"
+            let temp6= document.getElementById("submittotable")
+            temp6.disabled=true
+            temp6.style.cursor="not-allowed"
+            let temp7= document.getElementById("resettable")
+            temp7.onclick=function(){toreset_1()}
+          
+            Swal.fire({
+        icon: 'success',
+        title:'Now, calculate LIKELIHOOD PROBABILITY',
+        html: 'Click on the <b style="color:#FF6600">NEXT</b> button',
+        showCancelBotton:true,
+        allowOutsideClick: false,
+        target: '.container',
+        customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+
+  
+});
+    }
+    else{
+    countyn =0;
+    let c=''
+    let g=""
+    if (temp!=foryes){
+        temp_1.style.border="2px solid red"
+        c=c+"YES "
+        countyn=countyn+1
+    }
+    else{
+        temp_1.style.border=""
+    }
+    if (temp2!=forno){
+        temp_2.style.border="2px solid red"
+        c=c+"NO "
+        countyn=countyn+1
+    }
+    else{
+        temp_2.style.border=""
+    }
+    if(countyn==1){
+        c="Enter Correct value for "+c+"field."
+        g='INCORRECT VALUE'
+    }
+    if(countyn==2){
+        c="Values entered in both the fields are incorrect. "
+        g='INCORRECT VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+
+    }
+}
+else{
+
+    countyn =0;
+    c=''
+    g=''
+    if (isNaN(temp)==true){
+        temp_1.style.border="2px solid red"
+        c=c+"YES "
+        countyn=countyn+1
+    }
+    else{
+        temp_1.style.border=""
+    }
+    if (isNaN(temp2)==true){
+        temp_2.style.border="2px solid red"
+        c=c+"NO "
+        countyn=countyn+1
+    }
+    else{
+        temp_2.style.border=""
+    }
+    if(countyn==1){
+        c="Enter value in "+c+"field."
+        g='MISSING VALUE'
+    }
+    if(countyn==2){
+        c="Enter values in both the fields. "
+        g='MISSING VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+
+
+}
+}
+
+function tosubmitadd1(){
+    count=0
+    let c=''
+    
+    a=true;
+    let countnu=0
+    
+    for(let i=1;i<7;i++){
+        let temp= parseInt(document.getElementById("addin"+i).value)
+        let temp2 = document.getElementById("addin"+i)
+        if(isNaN(temp)==true  && temp2.disabled==false){
+               countnu=countnu+1;
+            //    c = c+eval('item'+i)
+               c=c+eval('item'+i)
+               
+            temp2.style.border="2px solid red"
+            a=false
+            }
+            else{
+            
+            temp2.style.border = "thin solid black"
+
+        }
+        
+    
+
+    }
+    for(let i=1;i<7;i++){
+        if (countnu>0){
+                break
+        }
+        
+        let temp= parseInt(document.getElementById("addin"+i).value)
+        let temp2 = document.getElementById("addin"+i)
+        if(temp!= eval("for"+i+"1") && temp2.disabled==false && countnu==0)
+        {
+            let temp2= document.getElementById("addin"+i)
+            temp2.style.border = "2px solid red"
+            a=false
+                count=count+1
+                c=c+eval('item'+i)
+               
+               
+            
+        }
+        else{
+            let temp2= document.getElementById("addin"+i)
+            temp2.style.border = "thin solid black"
+
+        }
+    }
+   
+    
+    if (a==true){
+        
+        temp3=document.getElementsByClassName("yes")
+        for(let i=0;i<6;i++){
+            if(eval("for"+(i+1)+'2')!=0){
+            let toenable= document.getElementById("negin"+(i+1))
+        toenable.disabled=false
+        toenable.style.cursor="pointer"
+            }
+            let temp= parseInt(document.getElementById("addin"+(i+1)).value)
+            temp3[i].innerHTML=(eval("for"+(1+i)+"1")/foryes).toFixed(3)
+            
+
+            
+    }
+    let changeonclick=document.getElementById("submittotable")
+    changeonclick.onclick=function(){tosubmitadd2()}
+    let temp7= document.getElementById("resettable")
+    temp7.onclick=function(){ toreset2()}
+    
+    if(fornoc==0){
+    Swal.fire({
+      icon: 'info',
+      title: 'Click on "SUBMIT" button to continue' ,
+      html: 'As there is no entry for <b>NO</b> target value, click on <b style="color:#FF6600">SUBMIT</b> button and then click on <b style="color:#FF6600">NEXT</b> button to continue.',
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+    this
+}
+}
+
+    else{
+        
+        tempa = c.split(" ,");
+        tempa.pop()
+        c=''
+        let g=""
+        if(count>countnu){
+        if(count==1){
+        c=tempa[0] 
+        
+        c=  `Enter correct value in `+c+" field."
+        g="INCORRECT VALUE"
+    }
+    if(count>=2 && count<=5){
+
+       
+      
+      
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c=`Enter correct values in `+c+" fields."
+        g="INCORRECT VALUES"
+    }
+    if(count==6){
+      c=`Enter correct values in all the fields.`
+      g="INCORRECT VALUES"
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+}
+if(countnu>count){
+    console.log(countnu)
+    if(countnu==1){
+        console.log(countnu)
+    console.log(tempa)
+    c=tempa[0] 
+        c=`Enter value in `+c+' field.'
+        g="MISSING VALUE"
+    }
+    if(countnu>=2 && countnu<=5){
+      6 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c=`Enter values in `+c+" fields."
+        g="MISSING VALUES"
+    }
+    if(countnu==6){
+      c=`Enter values in all the fields.`
+      g="MISSING VALUES"
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+}
+    }
+
+}
+
+
+
+
+function tosubmitadd2(){
+    let count=0
+    let c=''
+    
+    let a=true;
+    let countnu=0
+    for(let i=1;i<7;i++){
+        let temp= parseInt(document.getElementById("negin"+i).value)
+        let temp2 = document.getElementById("negin"+i)
+        if(isNaN(temp) && temp2.disabled==false){
+            temp2.style.border = "2px solid red"
+            a=false
+                countnu=countnu+1
+                c=c+eval('item'+i)
+            
+        }
+        else{
+            temp2.style.border = "thin solid black"
+
+        }
+    
+    }
+
+    for(let i=1;i<7;i++){
+        if (countnu>0){
+                break
+        }
+        let temp= parseInt(document.getElementById("negin"+i).value)
+        let temp2 = document.getElementById("negin"+i)
+        
+        if(temp!= eval("for"+i+"2") && temp2.disabled==false && countnu==0)
+        {
+            let temp2= document.getElementById("negin"+i)
+            temp2.style.border = "2px solid red"
+            a=false
+            c=c+eval('item'+i)
+            count=count+1
+        }
+        else{
+            let temp2= document.getElementById("negin"+i)
+            temp2.style.border = "thin solid black"
+
+        }
+    }
+    if (a==true){
+        
+        temp3=document.getElementsByClassName("no")
+        for(let i=0;i<6;i++){
+            let temp= parseInt(document.getElementById("negin"+(i+1)).value)
+            temp3[i].innerHTML=(eval("for"+(1+i)+"2")/forno).toFixed(3)
+    }
+
+    let changeonclick=document.getElementById("submittotable")
+    changeonclick.onclick=''
+    let temp6= document.getElementById("submittotable")
+            temp6.disabled=true
+            temp6.style.cursor="not-allowed"
+            let temp7= document.getElementById("resettable")
+    let temp5= document.getElementById("nexttotable")
+            temp5.disabled=false
+            temp5.style.cursor="pointer"
+            if(for61==0 || for62==0 || for41==0 || for42==0 || for51==0 || for52==0 || for11==0 || for12==0 || for21==0 || for22==0 || for31==0 || for32==0){
+            temp5.onclick=function(){tonextt2_1()}
+            
+        }
+            
+            else{
+                temp5.onclick=function(){tonextt2()}
+                
+            
+    
+            }
+            temp7.onclick=function(){ toreset2_1()}
+            
+}
+
+else{
+    let g=''
+        if(count>countnu){
+        if(count==1){
+            tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c=  `Enter correct value in `+c+" field."
+        g="INCORRECT VALUE"
+    }
+    
+    if(count>=2 && count<=5){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c=`Enter correct values in `+c+" fields."
+        g="INCORRECT VALUES"
+    }
+    if(count==6){
+      c=`Enter correct values in all the fields.`
+      g="INCORRECT VALUES"
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+}
+if(countnu>count){
+    let g=''
+    if(countnu==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c=`Enter value in `+c+' field.'
+        g="MISSING VALUE"
+    }
+    
+    if(countnu>=2 && countnu<=5){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c=`Enter values in `+c+" fields."
+        g="MISSING VALUES"
+    }
+    if(countnu==6){
+      c=`Enter values in all the fields.`
+      g="MISSING VALUES"
+    }
+
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+
+}
+    }
+
+}
+
+function toreset(){
+    temp=document.getElementById("addin")
+    temp2=document.getElementById("negin")
+    temp.value=''
+    temp2.value=''
+    let temp001= document.getElementById("forformule")
+    temp001.innerHTML=""
+    temp.style.border=""
+    temp2.style.border=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+}
+
+function tonextt2_1(){
+    let tempRE= document.getElementById("resettable")
+    tempRE.onclick=function(){ toreset2_1_1()}
+    let temp =document.getElementById("secondtable")
+    temp.style.height="300px"
+    temp.style.display="none"
+    let temp2 =document.getElementById("dataPointsTable")
+    temp2.style.display="none"
+    let temp6= document.getElementById("submittotable")
+            temp6.disabled=true
+
+            temp6.style.cursor="not-allowed"
+            
+    
+    let temp4 =document.getElementById("tablesContainer")
+    temp4.style.height="0px"
+    let temp22 = document.getElementById("training-control")
+    temp22.style.height="416px";
+    let temp7= document.getElementById("nexttotable")
+    temp7.disabled=true
+    temp7.style.cursor="not-allowed"
+    let temp8=document.getElementById("trainToTest")
+    temp8.innerHTML='CALCULATED VALUE'
+    let temp9=document.getElementById("calculation")
+    temp9.innerHTML='LAPLACE SMOOTHING'
+
+    let temp21 = document.getElementById("divcshow")
+    temp21.innerHTML=''
+    let tempIN =document.getElementById("secondtable").innerHTML
+    let temp2TB=document.createElement("table")
+    let tempDIS = document.getElementById("divcshow")
+     tempDIS.style.display="flex"
+     tempDIS.style.height='360px'
+    temp2TB.innerHTML=(tempIN)
+    let temp3=document.getElementById("divte")
+    
+   
+    temp21.appendChild(temp2TB)
+    if(for61==0 || for62==0 || for41==0 || for42==0 || for51==0 || for52==0 || for11==0 || for12==0 || for21==0 || for22==0 || for31==0 || for32==0){
+        d=''
+        for(let i = 0 ; i<6; i++){
+            if((eval("for"+(1+i)+"1"))==0 || (eval("for"+(1+i)+"2"))==0 ){
+                d=d+`P(${eval('item'+(i+1))} | YES) `
+                let tempred1 = document.getElementById("addinc"+(i+1))
+                tempred1.style.color="#FF6600"
+                d=d+`P(${eval('item'+(i+1))} | NO) `
+                let tempred2 = document.getElementById("neginc"+(i+1))
+                tempred2.style.color="#FF6600"
+
+            }
+            
+            Swal.fire({
+      icon: 'info',
+      title: 'Laplace Smoothing.',
+      html: `There are fields that contain zero values due to training dataset values, this may cause <b>Zero frequency problem</b>. To solve this we use Laplase Smoothing. `,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+            
+            a=`
+<br>
+            <div style="margin-left:10px;margin-top:70px;">
+                <p><b>Using Laplace smoothing :</b></p>
+
+
+<center style='font-size:20px'>P(feature|class) = <math style='font-size:20px'>
+                                <mfrac>
+                                  <mrow>
+                                    <mn>(count(feature, class) + 1) </mn>
+                                    <mn></mn>
+                                  </mrow>
+                                  <mn> (count(class) + V)</mn>
+                                </mfrac>
+                            </math></center>
+</div>
+    `
+    c=''
+    for(let i = 0 ; i<6; i++){
+            if((eval("for"+(1+i)+"1"))==0 || (eval("for"+(1+i)+"2"))==0){
+                c=c+`P(${eval('item'+(i+1))} | YES) = `
+           c=c+(((eval("for"+(1+i)+"1"))+1)/(foryes+(1*2))).toFixed(3)+'<br>'
+                c=c+`P(${eval('item'+(i+1))} | NO) = `
+                c=c+(((eval("for"+(1+i)+"2"))+1)/(forno+(1*2))).toFixed(3)+'<br>'
+            }
+        }
+    a=a+`
+    <p style="padding-left:10px"> <b>So new updated values will be :-</b></p>
+        <center>
+            ${c}</center></div>`   
+            let temp5= document.getElementById("nexttotable")
+            temp5.disabled=false
+            temp5.style.cursor="pointer"
+            temp5.onclick=function(){tonextt2()}
+
+        }
+    
+
+        }
+        temp3.style.display=''
+        temp3.style.height="fit-content"
+        temp3.innerHTML=a
+        
+    }
+
+
+
+function toreset2_1_1(){
+    let temp3= document.getElementById("forformule")
+    temp3.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+}
+
+
+function toreset1(){
+    for(let i=1;i<7;i++){
+        let temp2= document.getElementById("addin"+i)
+        if(temp2.disabled==false){
+        temp2.style.border = "thin solid black"
+        temp2.value=''}
+        
+    }
+    let temp10= document.getElementById("forformule")
+    temp10.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+}
+
+function toreset2(){
+
+    for(let i=1;i<7;i++){
+        let temp2 = document.getElementById("negin"+i)
+        if(temp2.disabled==false){
+        temp2.value=''
+            temp2.style.border = "thin solid black"}
+    }
+    let temp10= document.getElementById("forformule")
+    temp10.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+}
+
+function tosubmitaddfi(){
+    let temp=document.getElementById("TOBOLD")
+    let a,b,d,c;
+    let fitemp11=document.getElementById('yes')
+let fitemp21=document.getElementById('yescolor')
+let fitemp31=document.getElementById('yestype')
+let fitemp41=document.getElementById('yesorigin')
+
+let fitemp12=document.getElementById('no')
+let fitemp22=document.getElementById('nocolor')
+let fitemp32=document.getElementById('notype')
+let fitemp42=document.getElementById('noorigin')
+
+    if (thficount==1){
+        for(let i=1;i<4;i++){
+    let temp2 = temp.getElementsByTagName('td')[i].innerText+" ,"
+    if(i==1){
+        for(let j=1;j<3;j++){
+            
+            if(temp2==eval('item'+j)){
+                if(parseInt(eval("for"+j+"2"))!=0){
+                a=(eval("for"+j+"2")/forno).toFixed(3)
+            }
+            if(parseInt(eval("for"+j+"2"))==0 || parseInt(eval("for"+j+"1"))==0){
+                a=parseFloat((((eval("for"+(j)+"2"))+1)/(forno+(1*2))).toFixed(3))
+            }
+            }
+        
+    }
+
+        }
+    
+        if(i==2){
+        for(let k=3;k<5;k++){
+            if(temp2==eval('item'+k)){
+                if(parseInt(eval("for"+k+"2"))!=0){
+                b=(eval("for"+k+"2")/forno).toFixed(3)
+            }
+            if(parseInt(eval("for"+k+"2"))==0 || parseInt(eval("for"+k+"1"))==0){
+                b=parseFloat((((eval("for"+(k)+"2"))+1)/(forno+(1*2))).toFixed(3))
+            }
+        }
+        
+    }
+
+        }
+
+        if(i==3){
+        for(let z=5;z<7;z++){
+            if(temp2==eval('item'+z)){
+                if(parseInt(eval("for"+z+"2"))!=0)
+                d=(eval("for"+z+"2")/forno).toFixed(3)
+            }
+            if(temp2==eval('item'+z)){
+                if(parseInt(eval("for"+z+"2"))==0 || parseInt(eval("for"+z+"1"))==0)
+                d=parseFloat((((eval("for"+(z)+"2"))+1)/(forno+(1*2))).toFixed(3))
+            }
+        
+    }
+
+        }
+    
+    }
+
+   
+
+    if(isNaN(parseFloat(fitemp12.value))==false && isNaN(parseFloat(fitemp22.value))==false && isNaN(parseFloat(fitemp32.value))==false && isNaN(parseFloat(fitemp42.value))==false ){
+     if(parseFloat(fitemp12.value)==(pno).toFixed(3) && parseFloat(fitemp22.value)==a && parseFloat(fitemp32.value)==b && parseFloat(fitemp42.value)==d){
+        temp10=document.getElementById('negind')
+
+        temp10.innerHTML="<b>P(NO|NEW INSTANCE)</b> = "+((pno)*(a)*b*d).toFixed(3)
+        new_instance_no=((pno)*(a)*b*d).toFixed(3)
+        let temp6= document.getElementById("submittotable")
+    temp6.disabled=true
+    temp6.style.cursor="not-allowed"
+    let temp7= document.getElementById("nexttotable")
+    temp7.onclick=function(){tonextt3()}
+    temp7.disabled=false
+    temp7.style.cursor="pointer"
+    let temp13= document.getElementById("resettable")
+    temp13.onclick=function(){ toreset3_1()}
+    let fitemp12=document.getElementById('no')
+    let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+addlike=0
+
+  
+       }
+       else{
+    countyn =0;
+    
+      c=''
+    if (parseFloat(fitemp12.value)!=(pno).toFixed(3)){
+        fitemp12.style.border="2px solid red"
+        c=c+"P(NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp12.style.border="" 
+    }
+    if (parseFloat(fitemp22.value)!=a){
+        fitemp22.style.border="2px solid red"
+        c=c+"P(COLOR|NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp22.style.border="" 
+    }
+    if (parseFloat(fitemp32.value)!=b){
+        fitemp32.style.border="2px solid red"
+        c=c+"P(TYPE|NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp32.style.border="" 
+    }
+    if (parseFloat(fitemp42.value)!=d){
+        fitemp42.style.border="2px solid red"
+        c=c+"P(ORIGIN|NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp42.style.border="" 
+    }
+    tempa = c.split(" ,");
+      tempa.pop()
+    if(countyn==1){
+        c=''
+    c=tempa[0] 
+        c="Value entered in "+c+" field is incorrect."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        c=''
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect. "
+        g="INCORRECT VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+
+    }
+  }
+  else{
+    countyn =0;
+    c=''
+    g=''
+    if (isNaN(parseFloat(fitemp12.value))==true){
+        fitemp12.style.border="2px solid red"
+        c=c+"P(NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp12.style.border="" 
+    }
+    if (isNaN(parseFloat(fitemp22.value))==true){
+        fitemp22.style.border="2px solid red"
+        c=c+"P(COLOR|NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp22.style.border="" 
+    }
+    if (isNaN(parseFloat(fitemp32.value))==true){
+        fitemp32.style.border="2px solid red"
+        c=c+"P(TYPE|NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp32.style.border="" 
+    }
+    if (isNaN(parseFloat(fitemp42.value))==true){
+        fitemp42.style.border="2px solid red"
+        c=c+"P(ORIGIN|NO) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp42.style.border="" 
+    }
+    tempa = c.split(" ,");
+      tempa.pop()
+    if(countyn==1){
+        c=''
+        c=tempa[0] 
+        c="Enter value in "+c+" field."
+        g='ENTER VALUE'
+    }
+    if(countyn>1 && countyn<4){
+        c=''
+        for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+
+        c="Enter the values in "+c+" fields."
+        g='ENTER VALUES'
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields"
+        g='ENTER VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },  
+    });
+
+    }
+    
+}
+
+    if (thficount==0){
+        for(let i=1;i<4;i++){
+    let temp2 = temp.getElementsByTagName('td')[i].innerText+" ,"
+    if(i==1){
+        for(let j=1;j<3;j++){
+            
+            if(temp2==eval('item'+j)){
+                if(parseInt(eval("for"+j+"1"))!=0){
+                a=(eval("for"+j+"1")/foryes).toFixed(3)}
+                if(parseInt(eval("for"+j+"1"))==0 || parseInt(eval("for"+j+"2"))==0){
+                    a=parseFloat((((eval("for"+(j)+"1"))+1)/(foryes+(1*2))).toFixed(3))
+                }
+            }
+        
+    }
+
+        }
+    
+        if(i==2){
+        for(let k=3;k<5;k++){
+            if(temp2==eval('item'+k)){
+                if(parseInt(eval("for"+k+"1"))!=0){
+                b=(eval("for"+k+"1")/foryes).toFixed(3)}
+                if(parseInt(eval("for"+k+"1"))==0 || parseInt(eval("for"+k+"2"))==0){
+                b=parseFloat((((eval("for"+(k)+"1"))+1)/(foryes+(1*2))).toFixed(3))
+                }
+            }
+        
+    }
+
+        }
+
+        if(i==3){
+        for(let z=5;z<7;z++){
+            if(temp2==eval('item'+z)){
+                if(parseInt(eval("for"+z+"1"))!=0){
+                d=(eval("for"+z+"1")/foryes).toFixed(3)}
+                if(parseInt(eval("for"+z+"1"))==0 || parseInt(eval("for"+z+"2"))==0){
+                    d=parseFloat((((eval("for"+(z)+"1"))+1)/(foryes+(1*2))).toFixed(3))
+                }
+            }
+        
+    }
+
+        }
+    
+    }
+    console.log(a)
+    console.log(b)
+    console.log(d)
+    
+    if(isNaN(parseFloat(fitemp11.value))==false && isNaN(parseFloat(fitemp21.value))==false && isNaN(parseFloat(fitemp31.value))==false && isNaN(parseFloat(fitemp41.value))==false ){
+     if(parseFloat(fitemp11.value)==(pyes).toFixed(3) && parseFloat(fitemp21.value)==a && parseFloat(fitemp31.value)==b && parseFloat(fitemp41.value)==d){
+        temp10=document.getElementById('addind')
+
+        temp10.innerHTML="<b>P(YES|NEW INSTANCE)</b> = "+((pyes)*(a)*b*d).toFixed(3)
+        new_instance_yes=((pyes)*(a)*b*d).toFixed(3)
+        addlike=2
+        thficount=1
+        let fitemp22=document.getElementById('nocolor')
+let fitemp32=document.getElementById('notype')
+let fitemp42=document.getElementById('noorigin')
+fitemp12.disabled=false
+fitemp22.disabled=false
+fitemp32.disabled=false
+fitemp42.disabled=false
+fitemp12.style.cursor="pointer"
+fitemp22.style.cursor="pointer"
+fitemp32.style.cursor="pointer"
+fitemp42.style.cursor="pointer"
+
+let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+       }
+       else{
+    countyn =0;
+    c=''
+    console.log(a)
+    console.log(b)
+    console.log(d)
+    if (parseFloat(fitemp11.value)!=(pyes).toFixed(3)){
+        fitemp11.style.border="2px solid red"
+        c=c+"P(YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp11.style.border="" 
+    }
+    if (parseFloat(fitemp21.value)!=a){
+        fitemp21.style.border="2px solid red"
+        c=c+"P(COLOR|YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp21.style.border="" 
+    }
+    if (parseFloat(fitemp31.value)!=b){
+        fitemp31.style.border="2px solid red"
+        c=c+"P(TYPE|YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp31.style.border="" 
+    }
+    if (parseFloat(fitemp41.value)!=d){
+        fitemp41.style.border="2px solid red"
+        c=c+"P(ORIGIN|YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp41.style.border="" 
+    }
+    tempa = c.split(" ,");
+      tempa.pop()
+    if(countyn==1){
+        
+      c=''
+    c=tempa[0] 
+        c="Value entered in "+c+" field is incorrect."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        c=''
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },  
+    });
+
+    }
+  }
+  else{
+    
+    countyn =0;
+    c=''
+    if (isNaN(parseFloat(fitemp11.value))==true){
+        fitemp11.style.border="2px solid red"
+        c=c+"P(YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp11.style.border="" 
+    }
+    if (isNaN(parseFloat(fitemp21.value))==true){
+        fitemp21.style.border="2px solid red"
+        c=c+"P(COLOR|YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp21.style.border="" 
+    }
+    if (isNaN(parseFloat(fitemp31.value))==true){
+        fitemp31.style.border="2px solid red"
+        c=c+"P(TYPE|YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp31.style.border="" 
+    }
+    if (isNaN(parseFloat(fitemp41.value))==true){
+        fitemp41.style.border="2px solid red"
+        c=c+"P(ORIGIN|YES) ,"
+        countyn=countyn+1
+    }
+    else{
+        fitemp41.style.border="" 
+    }
+    tempa = c.split(" ,");
+      tempa.pop()
+    if(countyn==1){
+        c=''
+    c=tempa[0] 
+        c="Enter value in "+c+" field."
+        g="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+       
+        c=''
+      
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        g="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        g="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+    }
+    }
+}
+
+function toreset2_1(){
+    let temp=document.getElementById('secondtable')
+    temp.innerHTML=` <tr>
+                            <td rowspan="2"><b>S.No</b></td>
+                            <td rowspan="2" colspan="2"><b>FEATURES</b></td>
+                            <td colspan="2"><b>STOLEN</b>
+                                <tr>
+                                    <td><b>YES</b></td>
+                                    <td><b>NO<b></td>
+                                </tr>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td rowspan="2">COLOR</td>
+                            <td id >Black</td>
+                            <td id= addinc1 class="yes"><input id= addin1 max="10" min="0" type="number" style="width: 30px; text-align: center;"> /</td>
+                            <td id="neginc1" class="no"><input id="negin1" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Brown</td>
+                            <td id= addinc2 class="yes"><input id= addin2 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc2" class="no"><input id="negin2" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td rowspan="2">TYPE</td>
+                            <td>MUV</td>
+                            <td id= addinc3 class="yes"><input id= addin3 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc3" class="no"><input id="negin3" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>SUV</td>
+                            <td id= addinc4 class="yes"><input id= addin4 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc4" class="no"><input id="negin4" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td rowspan="2">ORIGIN</td>
+                            <td>Domestic</td>
+                            <td id= addinc5 class="yes"><input id= addin5 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc5" class="no"><input id="negin5" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Imported</td>
+                            <td id= addinc6 class="yes"><input id= addin6 max="10" min="0" type="number" style="width: 30px;text-align: center;"> /</td>
+                            <td id="neginc6" class="no"><input id="negin6" max="10" min="0" type="number" style="width: 30px; cursor:not-allowed;text-align: center;" disabled=true> /</td>
+                        </tr>`
+                        let temp7= document.getElementById("resettable")
+    temp7.onclick=function(){ toreset1()}
+    let temp6= document.getElementById("submittotable")
+    temp6.disabled=false
+    temp6.style.cursor="pointer"
+    temp6.onclick=function(){tosubmitadd1()}
+    let temp5= document.getElementById("nexttotable")
+            temp5.disabled=true
+            temp5.style.cursor="not-allowed"
+            for(let i=0;i<6;i++){
+            if(eval("for"+(i+1)+'1')==0){
+            let toenable= document.getElementById("addin"+(i+1))
+        toenable.disabled=true
+        toenable.style.cursor="not-allowed"}}
+        var toadd_denom=document.getElementsByClassName("yes")
+for(let i=0;i<toadd_denom.length;i++){
+    toadd_denom[i].innerHTML=toadd_denom[i].innerHTML+`${foryesc}`
+    
+}
+var toadd_denom=document.getElementsByClassName("no")
+for(let i=0;i<toadd_denom.length;i++){
+    toadd_denom[i].innerHTML=toadd_denom[i].innerHTML+`${fornoc}`
+    
+}
+let temp001= document.getElementById("forformule")
+    temp001.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+}
+
+function toreset_1(){
+    let temp10= document.getElementById("forformule")
+    temp10.innerHTML=""
+    temp=document.getElementById("firsttable")
+    temp.innerHTML=`<div id=addind style="margin-left: 150px; width: 170px;"><b>P(YES)</b> = 
+        <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="10" min="0" type="number" id=addin style="width: 50px;text-align: center; "/></mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+        </div>
+                        <div id=negind style="margin-left: 150px; margin-top: 20px; width: 160px;"> <b>P(NO)</b> = 
+                            <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="10" min="0" type="number" id=negin style="width: 50px; text-align: center; "/> </mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+                            </div>
+`
+let temp7= document.getElementById("resettable")
+    temp7.onclick=function(){ toreset()}
+    let temp6= document.getElementById("submittotable")
+    temp6.disabled=false
+    temp6.style.cursor="pointer"
+    let temp5= document.getElementById("nexttotable")
+            temp5.disabled=true
+            temp5.style.cursor="not-allowed"
+            let temp001= document.getElementById("forformule")
+    temp001.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+}
+
+function toreset3(){
+    let temp10= document.getElementById("forformule")
+    temp10.innerHTML=""
+    
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+    if(thficount==1){
+        let fitemp11=document.getElementById('no')
+let fitemp21=document.getElementById('nocolor')
+let fitemp31=document.getElementById('notype')
+let fitemp41=document.getElementById('noorigin')
+fitemp11.value=''
+fitemp21.value=''
+fitemp31.value=''
+fitemp41.value=''
+
+fitemp11.style.border=''
+fitemp21.style.border=''
+fitemp31.style.border=''
+fitemp41.style.border=''
+let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+    }
+    if(thficount==0){
+        let fitemp11=document.getElementById('yes')
+let fitemp21=document.getElementById('yescolor')
+let fitemp31=document.getElementById('yestype')
+let fitemp41=document.getElementById('yesorigin')
+fitemp11.value=''
+fitemp21.value=''
+fitemp31.value=''
+fitemp41.value=''
+
+fitemp11.style.border=''
+fitemp21.style.border=''
+fitemp31.style.border=''
+fitemp41.style.border=''
+
+let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+    }
+}
+
+function toreset3_1(){
+    temp10=document.getElementById('addind')
+    temp10.innerHTML="<b style='color:#FF6600'>P(YES|NEW INSTANCE)</b> = \
+    <input id=yes placeholder = 'P(YES)' type=number max=10 min=0 style='width:56px;text-align: center;'> * \
+    <input id=yescolor placeholder = 'P(COLOR|YES)' type=number max=10 min=0 style='width:105px;text-align: center;'> * <br>\
+    <input id=yestype placeholder = 'P(TYPE|YES)' type=number max=10 min=0 style='width:92px;text-align: center;margin-top: 10px;margin-left: 195px;'> * \
+    <input id=yesorigin placeholder = 'P(ORIGIN|YES)' type=number max=10 min=0 style='width:106px;text-align: center;'>"
+    temp11=document.getElementById("negind")
+    temp11.innerHTML="<b style='color:#FF6600'>P(NO|NEW INSTANCE)</b> =  \
+    <input id=no placeholder = 'P(NO)'type=number max=10 min=0 disabled style='width:52px;text-align: center;cursor:not-allowed'> * \
+    <input id=nocolor placeholder = 'P(COLOR|NO)' type=number max=10 min=0 disabled style='width:98px;text-align: center;cursor:not-allowed'> * <br>\
+    <input id=notype placeholder = 'P(TYPE|NO)' type=number max=10 min=0 disabled style='width:86px;text-align: center;margin-top: 10px;margin-left: 190px;cursor:not-allowed'> * \
+    <input id=noorigin placeholder = 'P(ORIGIN|NO)' type=number max=10 min=0 disabled style='width:101px;text-align: center;cursor:not-allowed'>"
+    let temp6= document.getElementById("submittotable")
+    temp6.disabled=false
+    temp6.style.cursor="pointer"
+    thficount=0
+    addlike=1
+    let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+let temp001= document.getElementById("forformule")
+    temp001.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+}
+        
+        </script>
+        <script src="js/script.js"></script>
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
+        <script>
+function tonextt1(){
+    let temp5= document.getElementById("nexttotable")
+            temp5.disabled=true
+            temp5.style.cursor="not-allowed"
+    const temp=document.getElementById("firsttable")
+    temp.style.display="none"
+    const temp2=document.getElementById("secondtable")
+    temp2.style.visibility="visible"
+    let temp6= document.getElementById("submittotable")
+            temp6.onclick=function(){ tosubmitadd1()}
+    let temp7= document.getElementById("resettable")
+    temp7.onclick=function(){ toreset1()}
+temp6.disabled=false
+temp6.style.cursor="pointer"
+temp7.disabled=false
+temp7.style.cursor="pointer"
+let tempcalch= document.getElementById("calculation")
+tempcalch.innerHTML="CALCULATION TABLE"
+
+if(foryesc==0){
+    Swal.fire({
+      icon: 'info',
+    title: 'Click on <b>"SUBMIT"</b> button to continue' ,
+      html: 'As there is no entry for <b>YES</b> target value, click on <b style="color:#FF6600">SUBMIT</b> button and then enter values for <b>NO</b> target value. ',
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+}
+}
+
+function tonextt2(){
+    let temp021 = document.getElementById("divcshow")
+    temp021.innerHTML=''
+
+    let temp =document.getElementById("secondtable")
+    temp.style.height="300px"
+    temp.style.display="none"
+
+    let tempre= document.getElementById("resettable")
+    tempre.onclick=function(){toreset2_1()}
+
+    if(for61==0 || for62==0 || for41==0 || for42==0 || for51==0 || for52==0 || for11==0 || for12==0 || for21==0 || for22==0 || for31==0 || for32==0){
+        for(let i = 0 ; i<6; i++){
+            if((eval("for"+(1+i)+"1"))==0 || (eval("for"+(1+i)+"2")==0)){
+           let temp3=document.getElementsByClassName("yes")
+            temp3[i].innerHTML=(((eval("for"+(1+i)+"1"))+1)/(foryes+(1*2))).toFixed(3)
+            
+
+           let temp4=document.getElementsByClassName("no")
+            temp4[i].innerHTML=b=(((eval("for"+(1+i)+"2"))+1)/(forno+(1*2))).toFixed(3)
+            }
+
+        }
+        
+    }
+    
+ 
+    let temp2 =document.getElementById("dataPointsTable")
+    temp2.style.display="none"
+    
+    let temp4 =document.getElementById("tablesContainer")
+    temp4.style.height="0px"
+    let temp20 = document.getElementById("divcedshow")
+    let temp21 = document.getElementById("divcshow")
+    temp20.style.display='flex'
+    temp21.style.display='flex'
+    let temp22 = document.getElementById("training-control")
+    temp22.style.height="416px";
+ 
+    let temp7= document.getElementById("nexttotable")
+    temp7.disabled=true
+    temp7.style.cursor="not-allowed"
+    let temp8=document.getElementById("trainToTest")
+    temp8.innerHTML='CALCULATED VALUE'
+    let temp9=document.getElementById("calculation")
+    temp9.innerHTML='POSTERIOR PROBABILITY'
+    temp10=document.getElementById('addind')
+    temp10.innerHTML="<b style='color:#FF6600'>P(YES|NEW INSTANCE)</b> = \
+    <input id=yes placeholder = 'P(YES)' type=number max=10 min=0 style='width:56px;text-align: center;'> * \
+    <input id=yescolor placeholder = 'P(COLOR|YES)' type=number max=10 min=0 style='width:105px;text-align: center;'> * <br>\
+    <input id=yestype placeholder = 'P(TYPE|YES)' type=number max=10 min=0 style='width:92px;text-align: center;margin-top: 10px;margin-left: 195px;'> * \
+    <input id=yesorigin placeholder = 'P(ORIGIN|YES)' type=number max=10 min=0 style='width:106px;text-align: center;'>"
+    temp11=document.getElementById("negind")
+    temp11.innerHTML="<b style='color:#FF6600'>P(NO|NEW INSTANCE) = \
+        <input id=no placeholder = 'P(NO)'type=number max=10 min=0 disabled style='width:52px;cursor:not-allowed;text-align: center;'> * \
+        <input id=nocolor placeholder = 'P(COLOR|NO)' type=number max=10 min=0 disabled style='width:101px;cursor:not-allowed;text-align: center;'> * \
+        <input id=notype placeholder = 'P(TYPE|NO)' type=number max=10 min=0 disabled style='width:86px;cursor:not-allowed;text-align: center;margin-top: 10px;margin-left: 190px;'> * \
+        <input id=noorigin placeholder = 'P(ORIGIN|NO)' type=number disabled max=10 min=0 style='width:93px;cursor:not-allowed;text-align: center;'>"
+    temp12=document.getElementById("firsttable")
+    temp12.style.display=''
+    temp10.style.marginLeft = "20px";
+    temp10.style.width='95%'
+    temp11.style.marginLeft = "20px";
+    temp12.style.marginTop = "45px";
+    temp11.style.marginTop = "80px";
+    temp11.style.width='95%'
+    let temp13= document.getElementById("resettable")
+    temp13.onclick=function(){ toreset3()}
+    let temp6= document.getElementById("submittotable")
+    temp6.onclick=function(){tosubmitaddfi()}
+    temp6.disabled=false
+    temp6.style.cursor="pointer"
+
+    let divte = document.getElementById('divte')
+    divte.innerhtml=''
+    let tdcontainer=document.getElementById("TOBOLD")
+    let rowii = tdcontainer.getElementsByTagName('td')
+    target_dict=[rowii[1].innerText,rowii[2].innerText,rowii[3].innerText,rowii[4].innerText]
+    divte.innerHTML=`<b>NEW INSTANCE = {COLOR : ${rowii[1].innerText}, TYPE : ${rowii[2].innerText}, ORIGIN : ${rowii[3].innerText}, STOLEN : ${rowii[4].innerText}}</b>`
+    divte.style.marginTop="60px"
+    divte.style.marginLeft="20px"
+    divte.style.display=""
+    addlike = 1;
+    
+
+
+
+}
+
+function tonextt3(){
+
+    let temp9=document.getElementById("tab-2")
+    temp9.style.color="white"
+    temp9.style.backgroundColor="#444648"
+    temp9.style.fontWeight="normal"
+    document.getElementById('calimg').src="images/calculator.png"
+
+    let temp10=document.getElementById("tab-3")
+    temp10.style.color="black"
+    temp10.style.backgroundColor="#e0e0e0"
+    temp10.style.fontWeight="bold"
+    let anai = document.getElementById('anaimg')
+    anai.src="images/analyse1.png"
+
+    let temp =document.getElementById("finalhide")
+    temp.style.display='none'
+    let temp2= document.getElementById("finalhide2")
+    temp2.style.display='none'
+    let temp3= document.getElementById('finale1')
+    let temp4=document.getElementById('dataPointsTable')
+    let temp5=document.getElementById("finale2")
+    temp5.style.width="50%"
+    temp5.style.marginTop="150px"
+    temp5.style.marginLeft='30px'
+    temp5.style.height="fit-content"
+    temp5.style.display="flex"
+    temp5.style.flexDirection="column"
+let newtemp = document.getElementById("box")
+newtemp.style.height="640px"
+    temp3.style.height="88%"
+    //temp3.style.border="1px solid #16696e"
+    temp3.style.width="60%"
+    temp4.style.display=''
+    temp4.style.marginTop='60px'
+    temp4.style.marginLeft='50px'
+    temp4.style.width="80%"
+    temp3.innerHTML=`<header id="trainToTest" class="header-box">OBSERVATION TABLE</header>`
+    temp3.appendChild(temp4)
+   let temp6 = document.getElementById("finalshow")
+   temp6.style.display=""
+    let temp7= document.getElementById('resettable')
+    let temp8= document.getElementById('retb')
+    temp8.style.right="177px"
+    temp7.onclick=function(){window.print();}
+    temp7.innerHTML="PRINT"
+
+
+    let temp1715 = document.getElementById("myModal")
+    temp1715.style.paddingTop="30px"
+    temp1715.style.height="610px"
+    temp5.innerHTML=`
+        <b>
+        P(YES|NEW INSTANCE) = ${new_instance_yes}
+        <br>
+        <br>
+        <br>
+        P(NO|NEW INSTANCE) = ${new_instance_no}
+        <br>
+        <br>
+        <br></b>`
+    if(new_instance_yes>new_instance_no){
+        temp5.innerHTML=temp5.innerHTML+`<b>
+            P(YES|NEW INSTANCE) > P(NO|NEW INSTANCE)
+        <br>
+        <br>
+        <br>
+        {COLOR : ${target_dict[0]}, TYPE : ${target_dict[1]}, ORIGIN : ${target_dict[2]}, STOLEN : <span style="color: #FF6600">YES</span>}
+        <br>
+        <br>
+        <br><p style="color:#FF6600">
+            Therefore, the prediction is that a car with the following attributes: COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]} will be stolen.</p></b>
+            `
+
+            Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, the prediction is that a car with the following attributes: COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]} will be stolen.`,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+            let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+    temp11[4].innerHTML="YES"
+    temp11[4].style.color="blue"
+    
+    }
+    if(new_instance_yes<new_instance_no){
+        temp5.innerHTML=temp5.innerHTML+`<b>P(NO|NEW INSTANCE) > P(YES|NEW INSTANCE)
+        <br>
+        <br>
+        <br>
+        {COLOR : ${target_dict[0]}, TYPE : ${target_dict[1]}, ORIGIN : ${target_dict[2]}, STOLEN : <span style="color: #FF6600">NO</span>}
+        <br>
+        <br>
+        <br><p style="color:#FF6600">
+            Therefore, the prediction is that a car with the following attributes: COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]} will not be stolen.</p></b></div>
+            `
+            Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, the prediction is that a car with the following attributes: COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]} will not be stolen.`,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+            let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+    temp11[4].innerHTML="NO"
+    temp11[4].style.color="blue"
+        
+    }
+    if(new_instance_yes==new_instance_no){
+        temp5.innerHTML=temp5.innerHTML+`<b>
+            P(YES|NEW INSTANCE) == P(NO|NEW INSTANCE)
+        <br>
+        <br>
+        <br>
+        {COLOR : ${target_dict[0]}, TYPE : ${target_dict[1]}, ORIGIN : ${target_dict[2]}, STOLEN : <span style="color: #FF6600">?</span>}
+        <br>
+        <br>
+        <br><p style="color:#FF6600">
+            Therefore, it cannot be determined whether the car with COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]} will be stolen or not.</p></b>
+            `
+            Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, it cannot be determined whether the car with COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]} will be stolen or not.`,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+            let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+
+    temp11[4].style.color="blue"
+    
+    }
+    if(new_instance_yes==0 && new_instance_no==0){
+        temp5.innerHTML=temp5.innerHTML+`<b>P(NO|NEW INSTANCE)=P(YES|NEW INSTANCE)=0
+        <br>
+        <br>
+        <br>
+        {COLOR : ${target_dict[0]}, TYPE : ${target_dict[1]}, ORIGIN : ${target_dict[2]}, STOLEN : <span style="color: #FF6600">?</span>}
+        <br>
+        <br>
+        <br><p style="color:#FF6600">
+            Therefore, it cannot be determined whether the car with COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]} will be stolen or not.</p></b></div>
+            `
+            Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, it cannot be determined whether the car with COLOR : ${target_dict[0]}, ORIGIN : ${target_dict[2]}, and TYPE : ${target_dict[1]}} will be stolen or not.`,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+            let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+    temp11[4].style.color="blue"
+    }
+    
+
+}
+
+function addprior(){
+    let temp21 = document.getElementById("divcshow")
+    if(addlike==0){
+    temp21.innerHTML=`<div style="display:flex;justify-content: space-around;width: 100%;flex-direction: column;align-items: center;height: 60%;">
+<div style="font-weight: bold; font-size: 25px;">P(YES) = ${(pyes).toFixed(3)}</div>                
+<div style="font-weight: bold; font-size: 25px;">P(NO) = ${(pno).toFixed(3)}</div></div>`}
+
+if(addlike==1){
+    temp21.innerHTML=`<div style="display:flex;justify-content: space-around;width: 100%;flex-direction: column;align-items: center;height: 60%;">
+<div style="font-weight: bold; font-size: 25px;color:#FF6600;">P(YES) = ${(pyes).toFixed(3)}</div>                
+<div style="font-weight: bold; font-size: 25px;">P(NO) = ${(pno).toFixed(3)}</div></div>`}
+
+if(addlike==2){
+    temp21.innerHTML=`<div style="display:flex;justify-content: space-around;width: 100%;flex-direction: column;align-items: center;height: 60%;">
+<div style="font-weight: bold; font-size: 25px;">P(YES) = ${(pyes).toFixed(3)}</div>                
+<div style="font-weight: bold; font-size: 25px;color:#FF6600;">P(O) = ${(pno).toFixed(3)}</div></div>`}
+
+
+ 
+}
+function addlikelihood(){
+    let temp21 = document.getElementById("divcshow")
+    temp21.innerHTML=''
+
+    if(addlike==0){
+    let temp =document.getElementById("secondtable").innerHTML
+    let temp2=document.createElement("table")
+    temp2.id="liket"
+    temp2.innerHTML=(temp)
+    temp21.appendChild(temp2)
+    
+}
+
+if(addlike==1){
+    let temp =document.getElementById("secondtable").innerHTML
+    let temp2=document.createElement("table")
+    temp2.id="liket"
+    temp2.innerHTML=(temp)
+    temp21.appendChild(temp2)
+    let tored=document.getElementById("liket")
+    let toredtd=tored.getElementsByTagName("td")
+
+    toredtd[6].style.color="#FF6600"
+    toredtd[15].style.color="#FF6600"
+    toredtd[24].style.color="#FF6600"
+
+    if(target_dict[0]=="Black"){
+        toredtd[7].style.color="#FF6600"
+        toredtd[8].style.color="#FF6600"
+    }
+
+    if(target_dict[0]=="Brown"){
+        toredtd[11].style.color="#FF6600"
+        toredtd[12].style.color="#FF6600"
+    }
+
+    if(target_dict[1]=="MUV"){
+        toredtd[16].style.color="#FF6600"
+        toredtd[17].style.color="#FF6600"
+    }
+    if(target_dict[1]=="SUV"){
+        toredtd[20].style.color="#FF6600"
+        toredtd[21].style.color="#FF6600"
+    }
+    if(target_dict[2]=="Domestic"){
+        toredtd[25].style.color="#FF6600"
+        toredtd[26].style.color="#FF6600"
+}
+    if(target_dict[2]=="Imported"){
+        toredtd[29].style.color="#FF6600"
+        toredtd[30].style.color="#FF6600"
+    }
+}
+
+if(addlike==2){
+    let temp =document.getElementById("secondtable").innerHTML
+    let temp2=document.createElement("table")
+    temp2.id="liket"
+    temp2.innerHTML=(temp)
+    temp21.appendChild(temp2)
+    let tored=document.getElementById("liket")
+    let toredtd=tored.getElementsByTagName("td")
+
+    toredtd[6].style.color="#FF6600"
+    toredtd[15].style.color="#FF6600"
+    toredtd[24].style.color="#FF6600"
+
+    if(target_dict[0]=="Black"){
+        toredtd[7].style.color="#FF6600"
+        toredtd[9].style.color="#FF6600"
+    }
+
+    if(target_dict[0]=="Brown"){
+        toredtd[11].style.color="#FF6600"
+        toredtd[13].style.color="#FF6600"
+    }
+
+    if(target_dict[1]=="MUV"){
+        toredtd[16].style.color="#FF6600"
+        toredtd[18].style.color="#FF6600"
+    }
+    if(target_dict[1]=="SUV"){
+        toredtd[20].style.color="#FF6600"
+        toredtd[22].style.color="#FF6600"
+    }
+    if(target_dict[2]=="Domestic"){
+        toredtd[25].style.color="#FF6600"
+        toredtd[27].style.color="#FF6600"
+}
+    if(target_dict[2]=="Imported"){
+        toredtd[29].style.color="#FF6600"
+        toredtd[31].style.color="#FF6600"
+    }
+}
+
+}
+        </script>
+        <script>
+localStorage.removeItem('objectToPass')
+
+
+
+const pageAccessedByReload = (
+  (window.performance.navigation && window.performance.navigation.type === 1) ||
+    window.performance
+      .getEntriesByType('navigation')
+      .map((nav) => nav.type)
+      .includes('reload')
+);
+if(pageAccessedByReload==true){
+    window.location.href="index.html"
+}
+
+
+
+
+
+        </script>
+
+    </div>
+
+</body>
+
+</html>
