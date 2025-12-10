@@ -1,39 +1,52 @@
-{
-  "version": 2.0,
-  "questions": [
-    {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
+[
+  {
+    "question": "What does Bayes' theorem allow us to do?",
+    "answers": {
+      "a": "Calculate conditional probabilities",
+      "b": "Determine the prior probabilities",
+      "c": "Perform regression analysis",
+      "d": "Update our beliefs based on new evidence"
     },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "c",
-      "difficulty": "beginner"
-    }
-  ]
-}
+    "correctAnswer": "d"
+  },
+  {
+    "question": "What assumption does Naive Bayes make regarding the features in the dataset?",
+    "answers": {
+      "a": "Conditional independence",
+      "b": "Strong positive correlation",
+      "c": "Complete dependence",
+      "d": "No correlation"
+    },
+    "correctAnswer": "a"
+  },
+  {
+    "question": "What is the formula for calculating the posterior probability in Naive Bayes?",
+    "answers": {
+      "a": "P(B|A) = (P(A|B) * P(B)) / P(A)",
+      "b": "P(A|B) = (P(B|A) * P(A))",
+      "c": "P(A|B) = (P(B|A) * P(A)) / P(B)",
+      "d": "P(B|A) = (P(A|B) * P(B))"
+    },
+    "correctAnswer": "c"
+  },
+  {
+    "question": "In Naive Bayes, how are the class probabilities estimated?",
+    "answers": {
+      "a": "Mean absolute deviation",
+      "b": "Maximum likelihood estimation",
+      "c": "Median absolute deviation",
+      "d": "Mode estimation"
+    },
+    "correctAnswer": "b"
+  },
+  {
+    "question": "Naive Bayes is commonly used in which type of machine learning tasks?",
+    "answers": {
+      "a": "Text classification",
+      "b": "Image recognition",
+      "c": "Reinforcement learning",
+      "d": "Clustering"
+    },
+    "correctAnswer": "a"
+  }
+]

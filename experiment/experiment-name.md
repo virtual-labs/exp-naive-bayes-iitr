@@ -1,1 +1,1 @@
-## Experiment name
+## To implement the Naive Bayes classifier for Continuous and Categorical data

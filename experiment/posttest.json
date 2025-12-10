@@ -1,39 +1,52 @@
-{
-  "version": 2.0,
-  "questions": [
-    {
-      "question": "This is a Sample Question 1?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "a",
-      "difficulty": "beginner"
+[
+  {
+    "question": "In Naive Bayes classification, how do you handle continuous numerical features in the dataset?",
+    "answers": {
+      "a": "Discretize the features into discrete intervals",
+      "b": "Use Gaussian probability distribution for each feature",
+      "c": "Convert the features into binary values",
+      "d": "Ignore the continuous features and focus on categorical features"
     },
-    {
-      "question": "This is a Sample Question 2?",
-      "answers": {
-        "a": "answer1",
-        "b": "answer2",
-        "c": "answer3",
-        "d": "answer4"
-      },
-      "explanations": {
-        "a": "Explanation 1  <a href='www.google.com'>here</a>",
-        "b": "Explanation 2",
-        "c": "Explanation 2",
-        "d": "Explanation 2"
-      },
-      "correctAnswer": "c",
-      "difficulty": "beginner"
-    }
-  ]
-}
+    "correctAnswer": "b"
+  },
+  {
+    "question": "How does Laplace smoothing (additive smoothing) help address the zero probability problem in Naive Bayes?",
+    "answers": {
+      "a": "It assigns a small non-zero probability to unseen events",
+      "b": "It assigns a zero probability to unseen events",
+      "c": "It increases the count of each event by 1",
+      "d": "It reduces the count of each event by 1"
+    },
+    "correctAnswer": "a"
+  },
+  {
+    "question": "When should you consider using Multinomial Naive Bayes over Gaussian Naive Bayes?",
+    "answers": {
+      "a": "When dealing with binary classification problems",
+      "b": "When the dataset contains continuous numerical features",
+      "c": "When the dataset contains categorical features",
+      "d": "When the dataset has imbalanced class distributions"
+    },
+    "correctAnswer": "c"
+  },
+  {
+    "question": "What is the purpose of feature selection in Naive Bayes?",
+    "answers": {
+      "a": "To reduce the dimensionality of the feature space",
+      "b": "To remove features that are not statistically significant",
+      "c": "To improve the performance of the Naive Bayes classifier",
+      "d": "To handle missing values in the dataset"
+    },
+    "correctAnswer": "c"
+  },
+  {
+    "question": "When is it appropriate to use Naive Bayes in real-world applications?",
+    "answers": {
+      "a": "When the dataset has a large number of features and a small number of instances",
+      "b": "When the class conditional independence assumption is violated",
+      "c": "When the dataset contains a mixture of continuous and categorical features",
+      "d": "When the class labels are highly correlated with each other"
+    },
+    "correctAnswer": "d"
+  }
+]

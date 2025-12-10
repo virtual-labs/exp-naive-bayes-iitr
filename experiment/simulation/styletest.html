@@ -1,0 +1,3388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styletest.css" />
+
+</head>
+
+<body>
+    <div class="container" id="box">
+        <!-- Instructions -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">×</span>
+                    <h2>Instructions</h2>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <ol type="1" style="font-size: 18px; text-align: justify">
+                            <li>Provide a value for each attribute and then click the <b>ADD</b> button to input these values into the table.</li>
+                            <li>Repeat step 1 until the trained dataset contains a total of 6 rows.</li>
+                            <li>Now, enter a value for each attribute to test the algorithm, and then click the <b>ADD</b> button.</li>
+                            <li>Now, click on the <b>NEXT</b> button to initiate the computation phase for the Naive Bayes model.</li>
+                            <li>Enter the occurrences of MALE and FEMALE from the DATASET to calculate <span style="color:#FF6600">Prior Probabilities</span>, then click <b>SUBMIT</b>.</li>
+                            <li>Now, click on <b>NEXT</b> button to calculate Mean and Variance.</li>
+                            <li>Click on the <b>MEAN</b> and then the <b>VARIANCE</b> button to see the calculated values.</li>
+                            <li>Now, click on the <b>NEXT</b> button to calculate <span style="color:#FF6600">Likelihood Probabilities</span> for each fields.</li>
+                            <li>Input the required data, starting with MALE and then clicking the <b>SUBMIT</b> button, and subsequently for FEMALE. Finally, click <b>NEXT</b> to proceed to the next set.</li>
+                            <li>Now, calculate the <span style="color:#FF6600">Posterior Probabilities</span> by entering the required values for P(MALE | NEW INSTANCE) and click on the <b>SUBMIT</b> button.</li>
+                            <ul>
+                                <li>Click on the 'Prior Probability' tab given on the left side of the page to view the required values.</li>
+                                <li>Next, click on the 'Likelihood Probability' tab and and observe the necessary values.</li>
+                            </ul>
+                            <li>Repeat the previous step(10) to calculate the <span style="color:#FF6600">Posterior Probabilities</span> for P(FEMALE | NEW INSTANCE).</li>
+                            <li>After submitting the values, click on the <b>NEXT</b> button to access the final result.</li>
+                      </ol>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <!-- header -->
+        <header class="header">
+            <div class="tabs">
+                <!-- tabs -->
+                <div id="tab-1"
+                    style="display: flex; border-right: 2px solid black; color: white; cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+                        CREATE
+                    </div>
+                    <img src="images/create.png" style="margin-top: 3px; margin-right: 10px; height: 85%" alt="">
+
+                </div>
+                <div id="tab-2" style="display: flex; border-right: 2px solid black; color: black;background-color: #e0e0e0;font-weight: bold;cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+
+                       COMPUTE
+                    </div>
+                    <img id="calimg" src="images/calculator1.png"
+                        style="margin-top: 3px; margin-right: 10px; height: 85%;cursor:not-allowed;" id="calImg" alt="">
+                </div>
+                <div id="tab-3"
+                    style="display: flex; border-right: 2px solid black; color: white; cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+                        ANALYZE
+                    </div>
+                    <img id="anaimg" src="images/analyse.png" style="margin-top: 3px; margin-right: 10px; height: 85%" alt="">
+
+                </div>
+            </div>
+            <a class="header-text" id="myBtn" style="padding-top: 8px" href="#">INSTRUCTIONS</a>
+        </header>
+
+        <div class="sec-con-container" id="finalshow" style="display: none;">
+            <div class="sec-con-column" id="finale1"></div>
+            <div class="sec-con-table" id="finale2"></div>
+        </div>
+        <div class="sec-con-container">
+            <div class="sec-con-column" id=finalhide>
+                <!-- controls -->
+                <div class="training-left-side-container">
+                    <div class="sub-div-control" id="training-control">
+                        <header id="trainToTest" class="header-box">OBSERVATION TABLE</header>
+                        <div id="tablesContainer">
+                            <table id="dataPointsTable" style="height : 388px">
+                
+                                    <tr style="background-color: #d8e9f0;">
+                                        <th>S.No</th>
+                                        <th>HEIGHT</th>
+                                        <th>WEIGHT</th>
+                                        <th style="width:106px">FOOT SIZE</th>
+                                        <th>GENDER</th>
+                                        
+                                    </tr>
+                              
+                            
+                            </table>
+                        </div>
+                        <div id="divcedshow" style="display: none;flex-direction: row; justify-content: space-around; margin-top: 5px;">
+                            <div class="warpper">
+                                <input class="radio" id="one" name="group" type="radio" onclick="addprior()">
+                                <input class="radio" id="two" name="group" type="radio" onclick="addlikelihood()">
+                            
+                          
+                                <div class="tabuler">
+                                    <label class="tab" id="one-tab" for="one">PRIOR PROBABILITY</label>
+                                    <label class="tab" id="two-tab" for="two">LIKELIHOOD PROBABILITY</label>
+                
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divcshow" style="display: none; align-items: center; justify-content: center; height: 360px; margin:0 auto; flex-direction: column;"></div>
+
+                        
+                        <!-- <div class="control-panel">
+                        </div> -->
+                    </div>
+                    <div class="sub-div-formula">
+                        <header class="header-box" style="position: sticky;  top: 0">FORMULAE</header>
+                        <div style="display: flex; flex-direction: row;">
+                            
+                            <div class="warpper2" style="display: flex; flex-direction: column;   height: 160px; overflow-y:scroll;overflow-x: hidden; text-align: center;width: 20%;">
+                                <input   class="radio" id="seven" name="group" type="radio" onclick="priorf()">
+                                <input   class="radio" id="five" name="group" type="radio" onclick="meanf()">
+                                <input   class="radio" id="six"  name="group" type="radio" onclick="variancef()">
+                                <input class="radio" id="three" name="group" type="radio" onclick="naivebayes()">
+                                <input class="radio" id="four" name="group" type="radio" onclick="ndb()">
+
+                            
+                            <div class="tabuler2";>
+                                <label class="tab2" id="seven-tab" for="seven" style="width: 70%; margin-top: 2px;">Prior Probability</label>
+                                <label class="tab2" id="five-tab" for="five" style="width: 70%; margin-top: 2px;">Mean</label>
+                                <label class="tab2" id="six-tab" for="six" style="width: 70%;margin-top: 2px;">Variance</label>
+                                <label class="tab2" id="three-tab" for="three" style="width: 70%;;margin-top: 2px;">Bayes Theorem</label>
+                                <label class="tab2" id="four-tab" for="four" style="width:70%;;margin-top: 2px;">Conditional Probability Density Function</label>
+            
+                            
+                        </div>
+                    </div>
+                            <div id="forformule" style="display: flex; align-items: center; justify-content: center; margin:0 auto; height: 160px; flex-direction: column;width: 80%;">
+                               
+
+                            </div>
+                  
+                        </div>
+                    </diV>
+                    
+                </div>
+            </div>
+
+            <!-- table -->
+            <div class="sec-con-table" id=finalhide2>
+                <div class="sub-div-table" id="fortarget">
+                    <header id=calculation class="header-box">PRIOR PROBABILITY</header>
+                    <div id="divte" style="display: none;font-size: larger;"></div>
+                    <div id="firsttable" style=" height: fit-content; position: relative; margin-top: 130px; font-size: larger;">
+                        <div id=fidel style="position: absolute; top: -100px; margin-left: 120px;"></div>
+                        <div id=addind style="margin-left: 120px; width: 200px;">
+                            <b>P(MALE) = </b>
+                            <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="6" min="0" type="number" id=addin style="width: 50px;text-align: center; " /></mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+                        
+                        
+                        </div>
+                        <div id=negind style="margin-left: 120px; margin-top: 20px; width: 220px;">
+                            <b>P(FEMALE) = </b>
+                            <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="6" min="0" type="number" id=negin style="width: 50px; text-align: center;"/></mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+                            </div>
+
+                </div>
+                    <table id="secondtable" style="display:  none;">
+                        <tr style="  background-color: #e0e0e0;color:black">
+                            <td><b>FEATURE </td></b></td>
+                            
+                        <td><b>GENDER </b></td>
+                            
+                        <td>  <b>MEAN(μ) </b></td>
+                            
+                        <td> <b>VARIANCE(σ²)</b> </td>
+                            
+                            </tr>
+                        <tr><td rowspan="2">HEIGHT</td>
+                            <td>MALE</td>
+                            <td class="meanid">
+                                
+                            </td>
+                            <td class='varianceid'> </td>
+                        </tr>
+                            <tr>
+                                 <td>FEMALE</td>
+                            <td class="meanid">
+            
+                            </td>
+                            <td class='varianceid'>
+                                
+                            </td>
+                            </tr>
+                            <tr><td rowspan="2">WEIGHT</td>
+                                <td>MALE</td>
+                                <td class="meanid">
+                                    
+                                </td>
+                                <td class='varianceid'> </td>
+                            </tr>
+                                <tr>
+                                     <td>FEMALE</td>
+                                <td class="meanid">
+                                    
+                                </td>
+                                <td class='varianceid'>
+                                    
+                                </td>
+                                </tr>
+                                <tr><td rowspan="2">FOOT SIZE</td>
+                                    <td>MALE</td>
+                                    <td class="meanid">
+                                        
+                                    </td>
+                                    <td class='varianceid'></td>
+                                </tr>
+                                    <tr>
+                                         <td>FEMALE</td>
+                                    <td class="meanid">
+                                        
+                                    </td>
+                                    <td class='varianceid'>
+                                        
+                                    </td>
+                                    </tr>
+                      
+
+                            
+                    </table>
+                </div>
+                <div id="hidediv1" style="position:absolute;bottom: 35px; right: 50px; display: flex; justify-content: space-between; flex-direction: column; height: 180px;">
+                <div><button id=submittotable class="button" onclick="tosubmitadd()">SUBMIT</button></div>
+                <div><button disabled=true id=nexttotable class="button" onclick="tonextt1()">NEXT</button></div>
+                <div><button id=resettable title="Reset the inputted value." class="button" onclick="toreset()">RESET</button></div>
+            </div> 
+            <div id="showdiv1" style="position:absolute;bottom: 36px; right: 50px; display: none; justify-content: space-between; flex-direction: column; height: 180px;">
+                <div><button id=meanbt class="button" onclick="tosubmitadd1()">MEAN</button></div>
+                <div><button id=variancebt class="button" disabled=true onclick="tosubmitadd2()">VARIANCE</button></div>
+                <div><button class="button" title="Reset the table." onclick="toreset2()">RESET</button></div>
+                <div><button id="nextbt" disabled=true class="button">NEXT</button></div>
+            </div> 
+        </div> <div id =retb style="position:absolute;bottom: 50px; right: 50px; display: none;"><button id=print class="button" onclick="toreset()">RESET</button></div>
+    </div>
+    
+
+        <!-- footer -->
+        <footer class="footer">
+            <span class="footer-text">© 2023 Virtual Labs, IIT Roorkee</span>
+        </footer>
+    </div>
+        <script>
+       let target_dict,new_instance_male,new_instance_female;
+       let formale=0
+       let forfemale=-1
+        var serializedData = localStorage.getItem('objectToPass'); // Retrieve the serialized table data from localStorage
+       var tableData = JSON.parse(serializedData);
+        var table = document.getElementById('dataPointsTable');
+item1='HEIGHT'
+item2='WEIGHT'
+item3='FOOT SIZE'
+let countin=1
+let likelihood = [0,0,0,0,0,0]
+let thficount = 0;
+let tyre=0;
+let uncheck3=document.getElementById("three")
+let uncheck4=document.getElementById("four")
+let uncheck5=document.getElementById("five")
+let uncheck6=document.getElementById("six")
+let uncheck7=document.getElementById("seven")
+// Reconstruct the table by iterating through the tableData array
+for (var i = 0; i < tableData.length; i++) {
+  var rowData = tableData[i];
+  if(rowData[4]=="Male"){
+  var row = table.insertRow(1);
+  row.classList.add("tocheck")
+  formale=formale+1
+  }
+  else{ 
+    var row = table.insertRow(-1);
+    row.classList.add("tocheck")
+    forfemale=forfemale+1
+  }
+  // Iterate through each property of the row data object
+  row[0]=i
+
+  for (var columnName in rowData) {
+    var cell = row.insertCell();
+
+    cell.textContent = rowData[columnName];
+  }
+}
+var rl = document.getElementsByClassName('tocheck');
+rl[6].style.backgroundColor="#ffc198"
+rl[6].style.color="black"
+rl[6].style.fontWeight="bold"
+rl[6].id="TOBOLD"
+
+for(let i=0;i<rl.length;i++){
+    rl[i].cells[0].innerHTML=i+1
+}
+let addlike = 0;
+let hm=0,hf=0,wm=0,wf=0,fsm=0,fsf=0;
+let hmv=0,hfv=0,wmv=0,wfv=0,fsmv=0,fsfv=0;
+let countsubval=0;
+
+for (var i = 0; i < tableData.length-1; i++) {
+  var rowData = tableData[i];
+
+  if(rowData[4]=="Male"){
+    hm=hm+parseFloat(rowData[1])
+    wm=wm+parseFloat(rowData[2])
+    fsm=fsm+parseFloat(rowData[3])
+    }
+  
+ if(rowData[4]=="Female"){
+    hf=hf+parseFloat(rowData[1])
+    wf=wf+parseFloat(rowData[2])
+    fsf=fsf+parseFloat(rowData[3])}
+
+    }
+    
+    
+    for (var i = 0; i < tableData.length-1; i++) {
+  var rowData = tableData[i];
+
+  if(rowData[4]=="Male"){
+    hmv=hmv+(parseFloat(rowData[1])-(hm/formale))*(parseFloat(rowData[1])-(hm/formale))
+    wmv=wmv+(parseFloat(rowData[2])-(wm/formale))*(parseFloat(rowData[2])-(wm/formale))
+    fsmv=fsmv+(parseFloat(rowData[3])-(fsm/formale))*(parseFloat(rowData[3])-(fsm/formale))
+    }
+  
+ if(rowData[4]=="Female"){
+    hfv=hfv+(parseFloat(rowData[1])-(hf/forfemale))*(parseFloat(rowData[1])-(hf/forfemale))
+    wfv=wfv+(parseFloat(rowData[2])-(wf/forfemale))*(parseFloat(rowData[2])-(wf/forfemale))
+    fsfv=fsfv+(parseFloat(rowData[3])-(fsf/forfemale))*(parseFloat(rowData[3])-(fsf/forfemale))}
+
+    }
+hmv=(hmv/(formale-1)).toFixed(2)
+wmv=(wmv/(formale-1)).toFixed(2)
+fsmv=(fsmv/(formale-1)).toFixed(2)
+hfv=(hfv/(forfemale-1)).toFixed(2)
+wfv=(wfv/(forfemale-1)).toFixed(2)
+fsfv=(fsfv/(forfemale-1)).toFixed(2)
+
+let tdcontainer=document.getElementById("TOBOLD")
+let rowii = tdcontainer.getElementsByTagName('td')
+    target_dict=[rowii[1].innerText,rowii[2].innerText,rowii[3].innerText,rowii[4].innerText]
+
+
+function tosubmitadd1(){
+
+    let td=document.getElementsByClassName("meanid")
+            td[0].innerHTML=(hm/formale).toFixed(2)
+            td[1].innerHTML=(hf/forfemale).toFixed(2)
+            td[2].innerHTML=(wm/formale).toFixed(2)
+            td[3].innerHTML=(wf/forfemale).toFixed(2)
+            td[4].innerHTML=(fsm/formale).toFixed(2)
+            td[5].innerHTML=(fsf/forfemale).toFixed(2)
+            q=document.getElementById("meanbt")
+            q.disabled=true
+            q.style.cursor="not-allowed"
+            o=document.getElementById("variancebt")
+            o.disabled=false
+            o.style.cursor="pointer"
+
+            Swal.fire({
+  icon: 'success',
+  html: 'Now, click on the <b style="color:#FF6600">VARIANCE</b> button.',
+  showCancelBotton:true,
+  allowOutsideClick: false,
+  target: '.container',
+  customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+});
+           
+}
+function tosubmitadd2(){
+
+    let td=document.getElementsByClassName("varianceid")
+
+   td[0].innerHTML=hmv
+            td[1].innerHTML=hfv
+            td[2].innerHTML=wmv
+            td[3].innerHTML=wfv
+            td[4].innerHTML=fsmv
+            td[5].innerHTML=fsfv
+            if (parseFloat(td[0].innerHTML)==0 || parseFloat(td[1].innerHTML)==0 || parseFloat(td[2].innerHTML)==0 || parseFloat(td[3].innerHTML)==0 || parseFloat(td[4].innerHTML)==0 || parseFloat(td[5].innerHTML)==0){
+
+                Swal.fire({
+      icon: 'error',
+      title: 'Restart the Simulation and provide different DATASET!!',
+      html: '<b>Zero Variance Problem</b> has occurred because the continuous feature(s) in the dataset lack variability or variation.',
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+    q=document.getElementById("meanbt")
+            q.disabled=true
+            o=document.getElementById("variancebt")
+            o.disabled=true
+            p=document.getElementById("nextbt")
+p.disabled=true
+            }
+            else{
+                if (formale==0.00000000001){
+    formale=0
+}
+if (forfemale==0.00000000001){
+    forfemale=0
+}
+            o=document.getElementById("variancebt")
+            o.disabled=true
+            o.style.cursor="not-allowed"
+            d=document.getElementById("nextbt")
+            d.disabled=false
+            d.style.cursor="pointer"
+            Swal.fire({
+  icon: 'success',
+  html: 'Click on the <b style="color:#FF6600">NEXT</b> button.',
+  showCancelBotton:true,
+  allowOutsideClick: false,
+  target: '.container',
+  customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+});
+            d.onclick=function(){tonext2()}
+            }
+       
+}
+function tonext3(){
+    addlike = 1;
+    let temp =document.getElementById("secondtable")
+        temp.style.height="300px"
+        temp.style.display="none"
+    let temp2 =document.getElementById("dataPointsTable")
+        temp2.style.display="none"
+    let tempcalhed=document.getElementById("calculation")
+        tempcalhed.innerHTML="POSTERIOR PROBABILITY "
+    
+    let temp4 =document.getElementById("tablesContainer")
+        temp4.style.height="0px"
+    let temp22 = document.getElementById("training-control")
+        temp22.style.height="416.5px";
+    let temp7= document.getElementById("nexttotable")
+        temp7.disabled=true
+        temp7.style.cursor="not-allowed"
+    let temp8=document.getElementById("trainToTest")
+        temp8.innerHTML='CALCULATED VALUE'
+    let temp000=document.getElementById("malediv")
+        temp000.style.display="none"
+    let temp001=document.getElementById("femalediv")
+        temp001.style.display="none"
+    // let femalediv
+    let temp21 = document.getElementById("divcshow")
+        temp21.innerHTML=''
+    let temp5= document.getElementById("nexttotable")
+        temp5.disabled=true
+        temp5.style.cursor="pointer"
+        temp5.onclick=function(){tonextt2()}
+    let temp20 = document.getElementById("divcedshow")
+        temp20.style.display='flex'
+        temp21.style.display='flex'
+    let temp9=document.getElementById("calculation")
+        temp9.innerhtml='CALCULATION'
+    let temp13= document.getElementById("resettable")
+        temp13.onclick=function(){ toreset3()}
+    let temp6= document.getElementById("submittotable")
+        temp6.onclick=function(){tosubmitaddfi()}
+        temp6.disabled=false
+        temp6.style.cursor="pointer"
+    let divte = document.getElementById('divte')
+        divte.innerhtml=''
+    let tdcontainer=document.getElementById("TOBOLD")
+    let rowii = tdcontainer.getElementsByTagName('td')
+    target_dict=[rowii[1].innerText, rowii[2].innerText, rowii[3].innerText, rowii[4].innerText]
+        divte.innerHTML=`<b>NEW INSTANCE</b> = { HEIGHT : ${rowii[1].innerText}, WEIGHT : ${rowii[2].innerText}, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText} }`
+        divte.style.marginTop="60px"
+        divte.style.marginLeft="20px"
+        divte.style.display=""
+    let tempft= document.getElementById("firsttable")
+        tempft.style.display=""
+    let temp10=document.getElementById('addind')
+        temp10.style.position="absolute"
+        temp10.style.top="-100px"
+        temp10.style.width=""
+        temp10.style.marginLeft="10px"
+        temp10.innerHTML="<b style='color:#FF6600'>P(MALE | NEW INSTANCE)</b> = \
+        <br><input id=yes placeholder = 'P(MALE)' type=number max=10 min=0 style='width:69px;text-align: center;'> \
+        * <input id=yescolor placeholder = 'P(HEIGHT|MALE)' type=number max=10 min=0 style='width:125px;text-align: center;'> \
+        * <input id=yestype placeholder = 'P(WEIGHT|MALE)' type=number max=10 min=0 style='width:125px;text-align: center;'> * <input id=yesorigin placeholder = 'P(FOOT SIZE|MALE)' type=number max=10 min=0 style='width:138px;text-align: center;'>"    
+        let temp11=document.getElementById("negind")
+        temp11.innerHTML="<b style='color:#FF6600'>P(FEMALE | NEW INSTANCE)</b> = <br>\
+        <input id=no placeholder = 'P(FEMALE)'type=number max=10 min=0 disabled=true style='width:85px;text-align: center;cursor:not-allowed;'> \
+        * <input id=nocolor placeholder = 'P(HEIGHT|FEMALE)' type=number max=10 min=0 disabled=true style='width:140px;text-align: center;cursor:not-allowed;'> \
+        * <input id=notype placeholder = 'P(WEIGHT|FEMALE)' type=number max=10 min=0 disabled=true style='width:140px;text-align: center;cursor:not-allowed;'> * <input id=noorigin placeholder = 'P(FOOT SIZE|FEMALE)' type=number disabled=true max=10 min=0 style='width:153px;text-align: center;cursor:not-allowed;'>"
+        temp11.style.marginLeft="10px"
+        temp11.style.width=""
+}
+function submitval(){
+
+    let temp=(document.getElementById(`${'hinm'+countin}`))
+    let temp2=(document.getElementById(`${'winm'+countin}`))
+    let temp3=(document.getElementById(`${'fsinm'+countin}`))
+    let temp3_1=(document.getElementById(`${'fsinm2'+countin}`))
+
+    let temp4=(document.getElementById(`${'hinf'+countin}`))
+    let temp5=(document.getElementById(`${'winf'+countin}`))
+    let temp6=(document.getElementById(`${'fsinf'+countin}`))
+    let temp6_1=(document.getElementById(`${'fsinf2'+countin}`))
+
+    let sectdp =document.getElementById("secondtable")
+    let sectd=sectdp.getElementsByTagName("td")
+    let divte = document.getElementById('divte')
+
+
+
+if(countsubval==1){
+    if(isNaN(parseFloat(temp.value))==false && isNaN(parseFloat(temp2.value))==false && isNaN(parseFloat(temp3.value))==false && isNaN(parseFloat(temp3_1.value))==false){
+        if(parseFloat(temp.value)==parseFloat(target_dict[0]) && (parseFloat(temp2.value)==(hm/formale).toFixed(2)) &&  parseFloat(temp3.value)==parseFloat(hmv) && parseFloat(temp3_1.value)==parseFloat(hmv)){
+        
+            let temp7 = document.getElementById("malediv")
+            likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[0]))-(hm/formale).toFixed(2))**2))/(2*parseFloat(hmv))))/((2*((Math.PI).toFixed(2))*parseFloat(hmv))**(1/2))).toFixed(14)
+                
+                if(likelihood[countsubval-1]==0){
+                    likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[0]))-(hm/formale).toFixed(2))**2))/(2*parseFloat(hmv))))/((2*((Math.PI).toFixed(2))*parseFloat(hmv))**(1/2))).toFixed(20)
+           let t=likelihood[countsubval-1];
+           if(t==0)
+           {
+            likelihood[countsubval-1]=0
+           }
+                }
+
+            temp7.innerHTML=`<b>P (${eval('item'+countin)} | MALE) </b> = `+likelihood[countsubval-1]
+
+                temp4.disabled=false
+                temp5.disabled=false
+                temp6.disabled=false
+                temp6_1.disabled=false
+
+                temp4.style.cursor="pointer"
+                temp5.style.cursor="pointer"
+                temp6.style.cursor="pointer"
+                temp6_1.style.cursor="pointer"
+
+                countsubval=countsubval+1
+
+            let tempn = document.getElementById("nexttotable")
+            tempn.disabled=true
+            tempn.style.cursor="not-allowed"
+
+            if(countsubval==2){
+        let sectd=sectdp.getElementsByTagName("td")
+
+        sectd[5].style.color='white'
+        sectd[6].style.color='white'
+        sectd[7].style.color='white'
+
+        sectd[8].style.color='#FF6600'
+        sectd[9].style.color='#FF6600'
+        sectd[10].style.color='#FF6600'
+    }
+
+            tyre=2
+
+        }
+        else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (parseFloat(temp.value)!=parseFloat(target_dict[countin-1]).toFixed(2)){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp.style.border="2px solid red"
+    }
+    else{
+        temp.style.border=""
+    }
+    if (parseFloat(temp2.value)!=(hm/formale).toFixed(2)){
+        c=c+`MEAN(μ) ,`
+        countyn=countyn+1
+        temp2.style.border="2px solid red"
+    }
+    else{
+        temp2.style.border=""
+    }
+    if (parseFloat(temp3.value)!=parseFloat(hmv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp3.style.border="2px solid red"
+    }
+    else{
+        temp3.style.border=""
+    }
+
+    if (parseFloat(temp3_1.value)!=parseFloat(hmv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp3_1.style.border="2px solid red"
+    }
+    else{
+        temp3_1.style.border=""
+    }
+
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a correct value in "+c+" field."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+//   
+    }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(temp.value))==true){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp.style.border="2px solid red"
+    }
+    else{
+        temp.style.border=""
+    }
+    if (isNaN(parseFloat(temp2.value))==true){
+        c=c+"MEAN(μ) ,"
+        countyn=countyn+1
+        temp2.style.border="2px solid red"
+    }
+    else{
+        temp2.style.border=""
+    }
+    if (isNaN(parseFloat(temp3.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp3.style.border="2px solid red"
+    }
+    else{
+        temp3.style.border=""
+    }
+    if (isNaN(parseFloat(temp3_1.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp3_1.style.border="2px solid red"
+    }
+    else{
+        temp3_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+
+        c="Enter a value in "+c+" field."
+        e="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+        c=''
+        for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+
+}
+else if(countsubval==2){
+    if(isNaN(parseFloat(temp4.value))==false && isNaN(parseFloat(temp5.value))==false && isNaN(parseFloat(temp6.value))==false && isNaN(parseFloat(temp6_1.value))==false){
+        if(parseFloat(temp4.value)==parseFloat(target_dict[0]) && (parseFloat(temp5.value)==(hf/forfemale).toFixed(2)) &&  parseFloat(temp6.value)==parseFloat(hfv) &&  parseFloat(temp6_1.value)==parseFloat(hfv)){
+
+        
+            let temp7 = document.getElementById("femalediv")
+            likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[0]))-(hf/forfemale).toFixed(2))**2)/(2*parseFloat(hfv)))))/((2*((Math.PI).toFixed(2))*parseFloat(hfv))**(1/2))).toFixed(14)
+            
+            if(likelihood[countsubval-1]==0){
+                likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[0]))-(hf/forfemale).toFixed(2))**2)/(2*parseFloat(hfv)))))/((2*((Math.PI).toFixed(2))*parseFloat(hfv))**(1/2))).toFixed(20)
+                let t=likelihood[countsubval-1];
+           if(t==0)
+           {
+            likelihood[countsubval-1]=0
+           }
+           
+           
+            }
+            temp7.innerHTML=`<b>P (${eval('item'+countin)} | FEMALE) </b> = `+likelihood[countsubval-1]
+            tyre=3
+       
+           Swal.fire({
+            icon:'success',
+            html:'Now, calculate the likelihood probability for the weight instance by clicking on the <b style="color:#FF6600">NEXT</b> button.',
+            allowOutsideClick: false,
+            target: '.container',
+            customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },
+           })
+
+            let temp222=document.getElementById("nexttotable")
+            temp222.onclick=function(){tonext2()}
+            temp222.disabled=false
+            temp222.style.cursor="pointer"
+
+            let tempn = document.getElementById("nexttotable")
+            tempn.disabled=false
+            tempn.style.cursor="pointer"
+
+            let temps=document.getElementById("submittotable")
+            temps.disabled=true
+            temps.style.cursor="not-allowed"
+            let sectd=sectdp.getElementsByTagName("td")
+        sectd[8].style.color='white'
+        sectd[9].style.color='white'
+        sectd[10].style.color='white'
+        sectd[4].style.color='white'
+
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {HEIGHT: ${rowii[1].innerText}, WEIGHT : ${rowii[2].innerText}, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+        countin=countin+1
+
+        }
+        else{
+    let countyn =0;
+    let c=''
+    let g=''
+    if (parseFloat(temp4.value)!=parseFloat(target_dict[0]).toFixed(2)){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp4.style.border="2px solid red"
+    }
+    else{
+        temp4.style.border=""
+    }
+    if (parseFloat(temp5.value)!=(hf/forfemale).toFixed(2)){
+        c=c+`MEAN(μ) ,`
+        countyn=countyn+1
+        temp5.style.border="2px solid red"
+    }
+    else{
+        temp5.style.border=""
+    }
+    if (parseFloat(temp6.value)!=parseFloat(hfv)){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6.style.border="2px solid red"
+    }
+    else{
+        temp6.style.border=""
+    }
+    if (parseFloat(temp6_1.value)!=parseFloat(hfv)){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6_1.style.border="2px solid red"
+    }
+    else{
+        temp6_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a correct value in "+c+" field."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+    }
+//   
+    }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(temp4.value))==true){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp4.style.border="2px solid red"
+    }
+    else{
+        temp4.style.border=""
+    }
+    if (isNaN(parseFloat(temp5.value))==true){
+        c=c+"MEAN(μ) ,"
+        countyn=countyn+1
+        temp5.style.border="2px solid red"
+    }
+    else{
+        temp5.style.border=""
+    }
+    if (isNaN(parseFloat(temp6.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6.style.border="2px solid red"
+    }
+    else{
+        temp6.style.border=""
+    }
+    if (isNaN(parseFloat(temp6_1.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6_1.style.border="2px solid red"
+    }
+    else{
+        temp6_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a value in "+c+" field."
+        e="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+        c=''
+        for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+    }
+
+    }
+    else if(countsubval==3){
+    if(isNaN(parseFloat(temp.value))==false && isNaN(parseFloat(temp2.value))==false && isNaN(parseFloat(temp3.value))==false && isNaN(parseFloat(temp3_1.value))==false){
+        if(parseFloat(temp.value)==parseFloat(target_dict[1]) && (parseFloat(temp2.value)==(wm/formale).toFixed(2)) &&  parseFloat(temp3.value)==parseFloat(wmv) &&  parseFloat(temp3_1.value)==parseFloat(wmv) ){
+            tyre=2
+        
+            let temp7 = document.getElementById("malediv")
+            likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[1]))-(wm/formale).toFixed(2))**2)/(2*parseFloat(wmv)))))/((2*((Math.PI).toFixed(2))*parseFloat(wmv))**(1/2))).toFixed(14)
+            
+            if(likelihood[countsubval-1]==0){
+            likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[1]))-(wm/formale).toFixed(2))**2)/(2*parseFloat(wmv)))))/((2*((Math.PI).toFixed(2))*parseFloat(wmv))**(1/2))).toFixed(20)
+            let t=likelihood[countsubval-1];
+           if(t==0)
+           {
+            likelihood[countsubval-1]=0
+           }
+        }
+            temp7.innerHTML=`<b>P (${eval('item'+countin)} | MALE) </b> = `+likelihood[countsubval-1]
+            temp4.disabled=false
+            temp5.disabled=false
+            temp6.disabled=false
+            temp6_1.disabled=false
+
+            temp4.style.cursor="pointer"
+            temp5.style.cursor="pointer"
+            temp6.style.cursor="pointer"
+            temp6_1.style.cursor="pointer"
+            
+            countsubval=countsubval+1
+            let tempn = document.getElementById("nexttotable")
+            tempn.disabled=true
+            tempn.style.cursor="not-allowed"
+
+            let temps=document.getElementById("submittotable")
+            temps.disabled=false
+            temps.style.cursor="pointer"
+
+            sectd[12].style.color='white'
+        sectd[13].style.color='white'
+        sectd[14].style.color='white'
+
+        sectd[15].style.color='#FF6600'
+        sectd[16].style.color='#FF6600'
+        sectd[17].style.color='#FF6600'
+
+        }
+        else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (parseFloat(temp.value)!=parseFloat(target_dict[1]).toFixed(2)){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp.style.border="2px solid red"
+    }
+    else{
+        temp.style.border=""
+    }
+    if (parseFloat(temp2.value)!=(wm/formale).toFixed(2)){
+        c=c+`MEAN(μ) ,`
+        countyn=countyn+1
+        temp2.style.border="2px solid red"
+    }
+    else{
+        temp2.style.border=""
+    }
+    if (parseFloat(temp3.value)!=parseFloat(wmv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp3.style.border="2px solid red"
+    }
+    else{
+        temp3.style.border=""
+    }
+    if (parseFloat(temp3_1.value)!=parseFloat(wmv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp3_1.style.border="2px solid red"
+    }
+    else{
+        temp3_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a correct value in "+c+" field."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+//   
+    }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(temp.value))==true){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp.style.border="2px solid red"
+    }
+    else{
+        temp.style.border=""
+    }
+    if (isNaN(parseFloat(temp2.value))==true){
+        c=c+"MEAN(μ) ,"
+        countyn=countyn+1
+        temp2.style.border="2px solid red"
+    }
+    else{
+        temp2.style.border=""
+    }
+    if (isNaN(parseFloat(temp3.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp3.style.border="2px solid red"
+    }
+    else{
+        temp3.style.border=""
+    }
+    if (isNaN(parseFloat(temp3_1.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp3_1.style.border="2px solid red"
+    }
+    else{
+        temp3_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a value in "+c+" field."
+        e='MISSING VALUE'
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+        c=''
+        for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e='MISSING VALUES'
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e='MISSING VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+
+}
+    
+    else if(countsubval==4){
+    if(isNaN(parseFloat(temp4.value))==false && isNaN(parseFloat(temp5.value))==false && isNaN(parseFloat(temp6.value))==false && isNaN(parseFloat(temp6_1.value))==false){
+        if(parseFloat(temp4.value)==parseFloat(target_dict[1]) && (parseFloat(temp5.value)==(wf/forfemale).toFixed(2)) &&  parseFloat(temp6.value)==parseFloat(wfv) &&  parseFloat(temp6_1.value)==parseFloat(wfv)){
+tyre=3
+       
+            let temp7 = document.getElementById("femalediv")
+            likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[1]))-(wf/forfemale).toFixed(2))**2)/(2*parseFloat(wfv)))))/((2*((Math.PI).toFixed(2))*parseFloat(wfv))**(1/2))).toFixed(14)
+            if(likelihood[countsubval-1]==0){
+                likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[1]))-(wf/forfemale).toFixed(2))**2)/(2*parseFloat(wfv)))))/((2*((Math.PI).toFixed(2))*parseFloat(wfv))**(1/2))).toFixed(20)
+                let t=likelihood[countsubval-1];
+           if(t==0)
+           {
+            likelihood[countsubval-1]=0
+           }
+            }
+            temp7.innerHTML=`<b>P (${eval( 'item'+countin)} | FEMALE) </b> = `+likelihood[countsubval-1]
+
+            Swal.fire({
+            icon:'success',
+            html:'Now, calculate the likelihood probability for the FOOT SIZE instance by clicking on the <b style="color:#FF6600">NEXT</b> button.',
+            allowOutsideClick: false,
+            target: '.container',
+            customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },
+           })
+            
+            let temp222=document.getElementById("nexttotable")
+            temp222.onclick=function(){tonext2()}
+            temp222.disabled=false
+            temp222.style.cursor="pointer"
+            
+
+            let temps=document.getElementById("submittotable")
+            temps.disabled=true
+            temps.style.cursor="not-allowed"
+            sectd[15].style.color='white'
+        sectd[16].style.color='white'
+        sectd[17].style.color='white'
+        sectd[11].style.color='white'
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {HEIGHT: ${rowii[1].innerText}, WEIGHT : ${rowii[2].innerText}, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+        countin=countin+1
+    }
+        else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (parseFloat(temp4.value)!=parseFloat(target_dict[1]).toFixed(2)){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp4.style.border="2px solid red"
+    }
+    else{
+        temp4.style.border=""
+    }
+    if (parseFloat(temp5.value)!=(wf/forfemale).toFixed(2)){
+        c=c+`MEAN(μ) ,`
+        countyn=countyn+1
+        temp5.style.border="2px solid red"
+    }
+    else{
+        temp5.style.border=""
+    }
+    if (parseFloat(temp6.value)!=parseFloat(wfv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp6.style.border="2px solid red"
+    }
+    else{
+        temp6.style.border=""
+    }
+    if (parseFloat(temp6_1.value)!=parseFloat(wfv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp6_1.style.border="2px solid red"
+    }
+    else{
+        temp6_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a correct value in "+c+" field."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect."
+        g="INCORRECT VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+
+    }
+  
+    }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(temp4.value))==true){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp4.style.border="2px solid red"
+    }
+    else{
+        temp4.style.border=""
+    }
+    if (isNaN(parseFloat(temp5.value))==true){
+        c=c+"MEAN(μ) ,"
+        countyn=countyn+1
+        temp5.style.border="2px solid red"
+    }
+    else{
+        temp5.style.border=""
+    }
+    if (isNaN(parseFloat(temp6.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6.style.border="2px solid red"
+    }
+    else{
+        temp6.style.border=""
+    }
+    if (isNaN(parseFloat(temp6_1.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6_1.style.border="2px solid red"
+    }
+    else{
+        temp6_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+
+        c="Enter a value in "+c+" field."
+        e="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+        c=''
+        for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+    }
+
+    }
+
+    else if(countsubval==5){
+        if(isNaN(parseFloat(temp.value))==false && isNaN(parseFloat(temp2.value))==false && isNaN(parseFloat(temp3.value))==false && isNaN(parseFloat(temp3_1.value))==false){
+        if(parseFloat(temp.value)==parseFloat(target_dict[2]) && (parseFloat(temp2.value)==(fsm/formale).toFixed(2)) &&  parseFloat(temp3.value)==parseFloat(fsmv) &&  parseFloat(temp3_1.value)==parseFloat(fsmv)){
+    tyre=2
+            let temp7 = document.getElementById("malediv")
+            likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[2]))-(fsm/formale).toFixed(2))**2)/(2*parseFloat(fsmv)))))/((2*((Math.PI).toFixed(2))*parseFloat(fsmv))**(1/2))).toFixed(14)
+            if(likelihood[countsubval-1]==0){
+                likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[2]))-(fsm/formale).toFixed(2))**2)/(2*parseFloat(fsmv)))))/((2*((Math.PI).toFixed(2))*parseFloat(fsmv))**(1/2))).toFixed(20)
+                let t=likelihood[countsubval-1];
+           if(t==0)
+           {
+            likelihood[countsubval-1]=0
+           }
+            }
+            temp7.innerHTML=`<b>P (${eval('item'+countin)} | MALE) </b> = `+likelihood[countsubval-1]
+          
+            temp4.disabled=false
+            temp5.disabled=false
+            temp6.disabled=false
+            temp6_1.disabled=false
+
+            temp4.style.cursor="pointer"
+            temp5.style.cursor="pointer"
+            temp6.style.cursor="pointer"
+            temp6_1.style.cursor="pointer"
+
+            countsubval=countsubval+1
+
+            let tempn = document.getElementById("nexttotable")
+            tempn.disabled=true
+            tempn.style.cursor="not-allowed"
+
+            let temps=document.getElementById("submittotable")
+            temps.disabled=false
+            temps.style.cursor="pointer"
+
+        sectd[19].style.color='white'
+        sectd[20].style.color='white'
+        sectd[21].style.color='white'
+
+        sectd[22].style.color='#FF6600'
+        sectd[23].style.color='#FF6600'
+        sectd[24].style.color='#FF6600'
+        }
+        else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (parseFloat(temp.value)!=parseFloat(target_dict[2]).toFixed(2)){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp.style.border="2px solid red"
+    }
+    else{
+        temp.style.border=""
+    }
+    if (parseFloat(temp2.value)!=(fsm/formale).toFixed(2)){
+        c=c+`MEAN(μ) ,`
+        countyn=countyn+1
+        temp2.style.border="2px solid red"
+    }
+    else{
+        temp2.style.border=""
+    }
+    if (parseFloat(temp3.value)!=parseFloat(fsmv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp3.style.border="2px solid red"
+    }
+    else{
+        temp3.style.border=""
+    }
+    if (parseFloat(temp3_1.value)!=parseFloat(fsmv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp3_1.style.border="2px solid red"
+    }
+    else{
+        temp3_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a correct value in "+c+" field."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect."
+        g="INCORRECT VALUE"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+
+    }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(temp.value))==true){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp.style.border="2px solid red"
+    }
+    else{
+        temp.style.border=""
+    }
+    if (isNaN(parseFloat(temp2.value))==true){
+        c=c+"MEAN(μ) ,"
+        countyn=countyn+1
+        temp2.style.border="2px solid red"
+    }
+    else{
+        temp2.style.border=""
+    }
+    if (isNaN(parseFloat(temp3.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp3.style.border="2px solid red"
+    }
+    else{
+        temp3.style.border=""
+    }
+    if (isNaN(parseFloat(temp3_1.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp3_1.style.border="2px solid red"
+    }
+    else{
+        temp3_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a value in "+c+" field."
+        e="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+        c=''
+        for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+
+
+}
+    
+    else if(countsubval==6){
+    if(isNaN(parseFloat(temp4.value))==false && isNaN(parseFloat(temp5.value))==false && isNaN(parseFloat(temp6.value))==false && isNaN(parseFloat(temp6_1.value))==false){
+        if(parseFloat(temp4.value)==parseFloat(target_dict[2]) && (parseFloat(temp5.value)==(fsf/forfemale).toFixed(2)) &&  parseFloat(temp6.value)==parseFloat(fsfv) &&  parseFloat(temp6_1.value)==parseFloat(fsfv) ){
+tyre=3
+            let temp7 = document.getElementById("femalediv")
+            likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[2]))-(fsf/formale).toFixed(2))**2)/(2*parseFloat(fsfv)))))/((2*((Math.PI).toFixed(2))*parseFloat(fsfv))**(1/2))).toFixed(14)
+            if(likelihood[countsubval-1]==0){
+                likelihood[countsubval-1]=((((Math.E).toFixed(2))**(-((((parseFloat(target_dict[2]))-(fsf/formale).toFixed(2))**2)/(2*parseFloat(fsfv)))))/((2*((Math.PI).toFixed(2))*parseFloat(fsfv))**(1/2))).toFixed(20)
+                let t=likelihood[countsubval-1];
+           if(t==0)
+           {
+            likelihood[countsubval-1]=0
+           }
+            }
+            temp7.innerHTML=`<b>P (${eval('item'+countin)} | FEMALE) </b> = `+likelihood[countsubval-1]
+
+            Swal.fire({
+            icon:'success',
+            html:'Now, calculate the <b>POSTERIOR PROBABILITIES</b> by clicking on the <b style="color:#FF6600">NEXT</b> button.',
+            allowOutsideClick: false,
+            target: '.container',
+            customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },
+           })
+            
+            countin=countin+1
+            let temp222=document.getElementById("nexttotable")
+            temp222.onclick=function(){tonext3()}
+            temp222.disabled=false
+            temp222.style.cursor="pointer"
+            
+            let tempn = document.getElementById("nexttotable")
+            tempn.disabled=false
+            tempn.style.cursor="pointer"
+
+            let temps=document.getElementById("submittotable")
+            temps.disabled=true
+            temps.style.cursor="not-allowed"
+
+            sectd[22].style.color='white'
+        sectd[23].style.color='white'
+        sectd[24].style.color='white'
+        sectd[18].style.color='white'
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {HEIGHT: ${rowii[1].innerText}, WEIGHT : ${rowii[2].innerText}, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+
+        }
+
+        else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (parseFloat(temp4.value)!=parseFloat(target_dict[2]).toFixed(2)){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp4.style.border="2px solid red"
+    }
+    else{
+        temp4.style.border=""
+    }
+    if (parseFloat(temp5.value)!=(fsf/forfemale).toFixed(2)){
+        c=c+`MEAN(μ) ,`
+        countyn=countyn+1
+        temp5.style.border="2px solid red"
+    }
+    else{
+        temp5.style.border=""
+    }
+    if (parseFloat(temp6.value)!=parseFloat(fsfv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp6.style.border="2px solid red"
+    }
+    else{
+        temp6.style.border=""
+    }
+    if (parseFloat(temp6_1.value)!=parseFloat(fsfv)){
+        c=c+`VARIANCE(σ²) ,`
+        countyn=countyn+1
+        temp6_1.style.border="2px solid red"
+    }
+    else{
+        temp6_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a correct value in "+c+" field."
+        g="INCORRECT VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    if(countyn==4){
+        e='INCORRECT VALUES'
+        g="Values entered in all the fields are incorrect. "
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+    }
+//   
+    }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(temp4.value))==true){
+        c=c+"x ,"
+        countyn=countyn+1
+        temp4.style.border="2px solid red"
+    }
+    else{
+        temp4.style.border=""
+    }
+    if (isNaN(parseFloat(temp5.value))==true){
+        c=c+"MEAN(μ) ,"
+        countyn=countyn+1
+        temp5.style.border="2px solid red"
+    }
+    else{
+        temp5.style.border=""
+    }
+    if (isNaN(parseFloat(temp6.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6.style.border="2px solid red"
+    }
+    else{
+        temp6.style.border=""
+    }
+    if (isNaN(parseFloat(temp6_1.value))==true){
+        c=c+"VARIANCE(σ²) ,"
+        countyn=countyn+1
+        temp6_1.style.border="2px solid red"
+    }
+    else{
+        temp6_1.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a value in "+c+" field."
+        e="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          a=a+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          a=a+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+
+    }
+    
+    
+
+}
+function tosubmitadd(){
+    count=0
+    c=''
+    a=true;
+    let temp=parseInt(document.getElementById("addin").value)
+    let temp2=parseInt(document.getElementById("negin").value)
+    let temp_1=document.getElementById("addin")
+    let temp_2=document.getElementById("negin")
+    if(isNaN(temp)==false && isNaN(temp2)==false){
+    if(temp==formale && temp2==forfemale){
+        if (formale==0){
+    formale=0.00000000001
+}
+if (forfemale==0){
+    forfemale=0.00000000001
+}
+
+            let temp3= document.getElementById("addind")
+            temp3.innerHTML= '<b>'+(temp3.innerText).slice(0,10)+'</b>'+(formale/6).toFixed(2)
+           
+            let temp4= document.getElementById("negind")
+            temp4.innerHTML= '<b>'+(temp4.innerText).slice(0,12)+'</b>'+(forfemale/6).toFixed(2)
+            let temp5= document.getElementById("nexttotable")
+            temp5.disabled=false
+            temp5.style.cursor="pointer"
+            let temp6= document.getElementById("submittotable")
+            temp6.disabled=true
+            temp6.style.cursor="not-allowed"
+            let temp7= document.getElementById("resettable")
+            temp7.onclick=function(){toreset_1()}
+
+            
+    }
+
+    //for incorrect values
+    else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (temp!=formale){
+        c=c+"MALE "
+        temp_1.style.border="2px solid red"
+        countyn=countyn+1
+    }
+    else{
+        temp_1.style.border=""
+    }
+    if (temp2!=forfemale){
+        c=c+"FEMALE "
+        temp_2.style.border="2px solid red"
+        countyn=countyn+1
+    }
+    else{
+        temp_2.style.border=""
+    }
+    if(countyn==1){
+        c="Value entered in "+c+"field is incorrect."
+        g='INCORRECT VALUE'
+    }
+    if(countyn==2){
+        c="Values entered in both the fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      showCancelBotton:true,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+return;
+    }
+}
+//for missing values
+else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(temp)==true){
+        c=c+"MALE "
+        temp_1.style.border="2px solid red"
+        countyn=countyn+1
+    }
+    else{
+        temp_1.style.border=""
+    }
+    if (isNaN(temp2)==true){
+        c=c+"FEMALE "
+        temp_2.style.border="2px solid red"
+        countyn=countyn+1
+    }
+    else{
+        temp_2.style.border=''
+    }
+    if(countyn==1){
+        c="Enter a value in "+c+"field."
+        e="MISSING VALUE"
+    }
+    if(countyn==2){
+        c="Enter the values in both the fields. "
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+return;
+    }
+
+    Swal.fire({
+  icon: 'success',
+  html: 'Click on the <b style="color:#FF6600">NEXT</b> button.',
+  showCancelBotton:true,
+  allowOutsideClick: false,
+  target: '.container',
+  customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+});
+
+}
+function tosubmitaddfi(){
+    let temp=document.getElementById("TOBOLD")
+    let fitemp11=document.getElementById('yes')
+let fitemp21=document.getElementById('yescolor')
+let fitemp31=document.getElementById('yestype')
+let fitemp41=document.getElementById('yesorigin')
+
+let fitemp12=document.getElementById('no')
+let fitemp22=document.getElementById('nocolor')
+let fitemp32=document.getElementById('notype')
+let fitemp42=document.getElementById('noorigin')
+
+    if (thficount==1){
+      
+    if(isNaN(parseFloat(fitemp12.value))==false && isNaN(parseFloat(fitemp22.value))==false && isNaN(parseFloat(fitemp32.value))==false && isNaN(parseFloat(fitemp42.value))==false ){
+     if(parseFloat(fitemp12.value)==(forfemale/6).toFixed(2) && parseFloat(fitemp22.value)==likelihood[1] && parseFloat(fitemp32.value)==likelihood[3] && parseFloat(fitemp42.value)==likelihood[5]){
+        temp10=document.getElementById('negind')
+        new_instance_no=((forfemale/6)*(likelihood[1])*likelihood[3]*likelihood[5]).toFixed(14)
+        if(new_instance_no==0){
+            new_instance_no=((forfemale/6)*(likelihood[1])*likelihood[3]*likelihood[5]).toFixed(20)
+        }
+        temp10.innerHTML="<b>P(FEMALE | NEW INSTANCE)</b> = "+new_instance_no
+        
+        let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+        addlike=0
+        let temp6= document.getElementById("submittotable")
+    temp6.disabled=true
+    temp6.style.cursor="not-allowed"
+    let temp7= document.getElementById("nexttotable")
+    temp7.onclick=function(){tonextt3()}
+    temp7.disabled=false
+    temp7.style.cursor="pointer"
+    let temp13= document.getElementById("resettable")
+    temp13.onclick=function(){ toreset3_1()}
+    let fitemp12=document.getElementById('no')
+
+  
+       }
+       else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (parseFloat(fitemp12.value)!=(forfemale/6).toFixed(2)){
+        c=c+"P(FEMALE) ,"
+        countyn=countyn+1
+        fitemp12.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp12.style.border=""
+    }
+    if (parseFloat(fitemp22.value)!=likelihood[1]){
+        c=c+"P(HEIGHT|FEMALE) ,"
+        countyn=countyn+1
+        fitemp22.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp22.style.border=""
+    }
+    if (parseFloat(fitemp32.value)!=likelihood[3]){
+        c=c+"P(WEIGHT|FEMALE) ,"
+        countyn=countyn+1
+        fitemp32.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp32.style.border=""
+    }
+    if (parseFloat(fitemp42.value)!=likelihood[5]){
+        c=c+"P(FOOT SIZE|FEMALE) ,"
+        countyn=countyn+1
+        fitemp42.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp42.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Value entered in "+c+" field is incorrect."
+        g='INCORRECT VALUE'
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },   
+    });
+
+    }
+  }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(fitemp12.value))==true){
+        c=c+"P(FEMALE) ,"
+        countyn=countyn+1
+        fitemp12.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp12.style.border=""
+    }
+    if (isNaN(parseFloat(fitemp22.value))==true){
+        c=c+"P(HEIGHT|FEMALE) ,"
+        countyn=countyn+1
+        fitemp22.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp22.style.border=""
+    }
+    if (isNaN(parseFloat(fitemp32.value))==true){
+        c=c+"P(WEIGHT|FEMALE) ,"
+        countyn=countyn+1
+        fitemp32.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp32.style.border=""
+    }
+    if (isNaN(parseFloat(fitemp42.value))==true){
+        c=c+"P(FOOT SIZE|FEMALE) ,"
+        countyn=countyn+1
+        fitemp42.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp42.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a value in "+c+" field."
+        e="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+    
+}
+
+    if (thficount==0){
+    
+    if(isNaN(parseFloat(fitemp11.value))==false && isNaN(parseFloat(fitemp21.value))==false && isNaN(parseFloat(fitemp31.value))==false && isNaN(parseFloat(fitemp41.value))==false ){
+     if(parseFloat(fitemp11.value)==(formale/6).toFixed(2) && parseFloat(fitemp21.value)==likelihood[0] && parseFloat(fitemp31.value)==likelihood[2] && parseFloat(fitemp41.value)==likelihood[4]){
+        temp10=document.getElementById('addind')
+        new_instance_yes=((formale/6)*(likelihood[0])*likelihood[2]*likelihood[4]).toFixed(14)
+        if(new_instance_yes==0){
+            new_instance_yes=((formale/6)*(likelihood[0])*likelihood[2]*likelihood[4]).toFixed(20)
+        }
+        temp10.innerHTML="<b>P(MALE | NEW INSTANCE) </b>= "+new_instance_yes
+        addlike=2
+        thficount=1
+
+        let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+        let fitemp22=document.getElementById('nocolor')
+let fitemp32=document.getElementById('notype')
+let fitemp42=document.getElementById('noorigin')
+fitemp12.disabled=false
+fitemp22.disabled=false
+fitemp32.disabled=false
+fitemp42.disabled=false
+
+fitemp12.style.cursor="pointer"
+fitemp22.style.cursor="pointer"
+fitemp32.style.cursor="pointer"
+fitemp42.style.cursor="pointer"
+  
+       }
+       else{
+    let countyn =0;
+    let c=''
+    let g =''
+    if (parseFloat(fitemp11.value)!=(formale/6).toFixed(2)){
+        c=c+"P(MALE) ,"
+        countyn=countyn+1
+        
+            fitemp11.style.border="2px solid red"
+        }
+        else{
+            
+            fitemp11.style.border=""
+        }
+    if (parseFloat(fitemp21.value)!=likelihood[0]){
+        c=c+"P(HEIGHT|MALE) ,"
+        countyn=countyn+1
+        
+        fitemp21.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp21.style.border=""
+    }
+    if (parseFloat(fitemp31.value)!=likelihood[2]){
+        c=c+"P(WEIGHT|MALE) ,"
+        countyn=countyn+1
+        
+        fitemp31.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp31.style.border=""
+    }
+    if (parseFloat(fitemp41.value)!=likelihood[4]){
+        c=c+"P(FOOT SIZE|MALE) ,"
+        countyn=countyn+1
+        
+        fitemp41.style.border="2px solid red"
+    }
+    else{
+        
+        fitemp41.style.border=""
+    }
+
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Value entered in "+c+" field is incorrect."
+        g='INCORRECT VALUE'
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Values entered in "+c+" fields are incorrect."
+        g='INCORRECT VALUES'
+    }
+    if(countyn==4){
+        c="Values entered in all the fields are incorrect. "
+        g='INCORRECT VALUES'
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: g,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+    }
+  }
+  else{
+    let countyn =0;
+    let c=''
+    let e=''
+    if (isNaN(parseFloat(fitemp11.value))==true){
+        c=c+"P(MALE)) ,"
+        countyn=countyn+1
+        fitemp11.style.border="2px solid red"
+
+    }
+    else{
+        fitemp11.style.border=""
+    }
+    if (isNaN(parseFloat(fitemp21.value))==true){
+        c=c+"P(HEIGHT|MALE) ,"
+        countyn=countyn+1
+        fitemp21.style.border="2px solid red"
+
+    }
+    else{
+        fitemp21.style.border=""
+    }
+    if (isNaN(parseFloat(fitemp31.value))==true){
+        c=c+"P(WEIGHT|MALE) ,"
+        countyn=countyn+1
+        fitemp31.style.border="2px solid red"
+
+    }
+    else{
+        fitemp31.style.border=""
+    }
+    if (isNaN(parseFloat(fitemp41.value))==true){
+        c=c+"P(FOOT SIZE|MALE) ,"
+        countyn=countyn+1
+        fitemp41.style.border="2px solid red"
+    }
+    else{
+        fitemp41.style.border=""
+    }
+    if(countyn==1){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c=''
+    c=tempa[0] 
+        c="Enter a value in "+c+" field."
+        e="MISSING VALUE"
+    }
+    if(countyn>1 && countyn<4){
+        tempa = c.split(" ,");
+      tempa.pop()
+      c='' 
+      for(let i=0;i<tempa.length;i++){
+        if (i!=tempa.length-1){
+          c=c+tempa[i]+', '
+        }
+        if(i==tempa.length-1){
+          c=c+'and '+tempa[i]
+        }
+      }
+        c="Enter the values in "+c+" fields."
+        e="MISSING VALUES"
+    }
+    if(countyn==4){
+        c="Enter the values in all the fields."
+        e="MISSING VALUES"
+    }
+    
+    Swal.fire({
+      icon: 'error',
+      title: e,
+      text: c,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },     
+    });
+
+    }
+    }
+}
+
+function tonextt1(){
+    let tempcalhed=document.getElementById("calculation")
+    tempcalhed.innerHTML="MEAN & VARIANCE TABLE"
+    let temp5= document.getElementById("nexttotable")
+            temp5.disabled=true
+            temp5.style.cursor="not-allowed"
+    const temp=document.getElementById("firsttable")
+    temp.style.display="none"
+    let tempb= document.getElementById('fidel')
+    tempb.style.display="none"
+    const temp2=document.getElementById("secondtable")
+    temp2.style.display=""
+    temp2.style.marginTop="90px"
+    let temp6= document.getElementById("submittotable")
+            temp6.onclick=function(){ tosubmitadd1()}
+    let temp7= document.getElementById("resettable")
+    temp7.onclick=function(){ toreset1()}
+temp6.disabled=false
+temp7.disabled=false
+temp7.style.cursor="pointer"
+temp6.style.cursor="pointer"
+let temp8= document.getElementById("hidediv1")
+            temp8.style.display="none"
+            let temp9= document.getElementById("showdiv1")
+            temp9.style.display="flex"
+}
+function tonext2(){
+    if(countsubval>1){
+        
+        let temp333 = document.getElementById("dynamicdiv")
+            temp333.remove()
+            let temps=document.getElementById("submittotable")
+            temps.disabled=false
+            temps.style.cursor="pointer"
+            let tempn = document.getElementById("nexttotable")
+            tempn.disabled=true
+            tempn.style.cursor="not-allowed"
+        
+    }
+    
+    let tempcalhed=document.getElementById("calculation")
+        tempcalhed.innerHTML="LIKELIHOOD PROBABILITY "
+    
+    let temp = document.getElementById("showdiv1")
+    temp.style.display="none"
+    let temp2 = document.getElementById("hidediv1")
+    temp2.style.display="flex"
+    let temp3 = document.getElementById("dataPointsTable")
+    temp3.style.display='none'
+    let temp4 = document.getElementById("secondtable")
+    
+    let temp5 = document.getElementById("tablesContainer")
+    temp5.appendChild(temp4)
+    let divte = document.getElementById('divte')
+    
+    let temp9= document.getElementById("resettable")
+    temp9.onclick=function(){ toreset2_2()}
+    if(countin==1){
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {<span style="color: #FF6600">HEIGHT: ${rowii[1].innerText}</span>, WEIGHT : ${rowii[2].innerText}, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+    }
+    if(countin==2){
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {HEIGHT : ${rowii[1].innerText}, <span style="color: #FF6600">WEIGHT : ${rowii[2].innerText}</span>, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+    }
+    if(countin==3){
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {HEIGHT : ${rowii[1].innerText}, WEIGHT : ${rowii[2].innerText}, <span style="color: #FF6600">FOOT SIZE : ${rowii[3].innerText}</span> , GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+    }
+    divte.style.marginTop="20px"
+    divte.style.marginLeft="20px"
+    divte.style.display=""
+
+    let temp8=document.getElementById('submittotable')
+    temp8.onclick=function(){submitval()}
+    let temp6 = document.createElement("div")
+    temp6.id="dynamicdiv"
+    temp6.style.marginTop="45px"
+    temp6.innerHTML=`<div  id=malefemalediv style="display: flex; align-items: center; justify-content: center; margin:0 auto; height: 160px; flex-direction: column;">
+    <div id=malediv style="font-weight: bold;   "> P (${eval('item'+countin)} | MALE) = <math style="font-weight: bold; font-size: 25px; ">
+        <mfrac>
+                <mrow>
+                    <mn>1</mn>
+                </mrow>
+                <msqrt>
+                    <mi style="display:block">( 2π <input min="0" id="${'fsinm2'+countin}" type=number style='width:45px;text-align: center;' placeholder="σ²"> )</mi>
+                </msqrt>
+
+            </mfrac>
+            <mrow>
+                <msup>
+                    <mi>e</mi>
+
+                    <mfrac>
+                        <mrow>
+                            <mi style="display:block">- ( <input id="${'hinm'+countin}" type=number min="0" placeholder="x" style='width:35px;text-align: center;'> - <input min="0" id="${'winm'+countin}" type=number style='width:35px;text-align: center;' placeholder="μ"> )²</mi>
+                        </mrow>
+                        <mi style="display:block">( 2 <input min="0" id="${'fsinm'+countin}" type=number style='width:45px;text-align: center;' placeholder="σ²"> )</mi>
+                    </mfrac>
+
+                </msup>
+            </mrow>
+                            </math> 
+                            
+                              
+                              
+                            
+                            </div>
+                            <div id=femalediv style="display: flex; align-items: center; justify-content: center; margin:0 auto; height: 160px; font-weight: bold;margin-top:20px;">
+    <div> P (${eval('item'+countin)} | FEMALE) = <math style="font-weight: bold; font-size: 25px;">
+        <mfrac>
+                <mrow>
+                    <mn>1</mn>
+
+
+                </mrow>
+                <msqrt>
+                    <mi style="display:block">( 2π <input  min="0" id="${'fsinf2'+countin}" disabled=true type=number style='width:45px;text-align: center;cursor:not-allowed;' placeholder="σ²"> )</mi>
+                </msqrt>
+
+            </mfrac>
+            <mrow>
+                <msup>
+                    <mi>e</mi>
+
+                    <mfrac>
+                        <mrow>
+                            <mi style="display:block">- ( <input min="0" id="${'hinf'+countin}" disabled=true type=number placeholder="x" disabled=true style='width:35px;text-align: center;cursor:not-allowed;'>  - <input  min="0" id="${'winf'+countin}" type=number disabled=true style='width:35px;text-align: center;cursor:not-allowed;' placeholder="μ"> )²</mi>
+                        </mrow>
+                        <mi style="display:block">( 2 <input  min="0" id="${'fsinf'+countin}" disabled=true type=number style='width:45px;text-align: center;cursor:not-allowed;' placeholder="σ²"> )</mi>
+                    </mfrac>
+
+                </msup>
+            </mrow>
+                            </math> 
+                            
+                             
+                            
+                            
+                            </div>
+                            </div>`
+
+       
+    let temp7 = document.getElementById("fortarget")
+    temp7.appendChild(temp6)
+    countsubval=countsubval+1
+    if(countsubval==1){
+        let sectd=temp4.getElementsByTagName("td")
+        sectd[4].style.color='#FF6600'
+        sectd[5].style.color='#FF6600'
+        sectd[6].style.color='#FF6600'
+        sectd[7].style.color='#FF6600'
+    }
+    else if(countsubval==3){
+        let sectd=temp4.getElementsByTagName("td")
+        sectd[11].style.color='#FF6600'
+        sectd[12].style.color='#FF6600'
+        sectd[13].style.color='#FF6600'
+        sectd[14].style.color='#FF6600'
+    }
+    else if(countsubval==5){
+        let sectd=temp4.getElementsByTagName("td")
+        sectd[18].style.color='#FF6600'
+        sectd[19].style.color='#FF6600'
+        sectd[20].style.color='#FF6600'
+        sectd[21].style.color='#FF6600'
+    }
+
+    tyre=1
+}
+function tonextt3(){
+
+let temp9=document.getElementById("tab-2")
+temp9.style.color="white"
+temp9.style.backgroundColor="#444648"
+temp9.style.fontWeight="normal"
+document.getElementById('calimg').src="images/calculator.png"
+
+
+let temp10=document.getElementById("tab-3")
+temp10.style.color="black"
+temp10.style.backgroundColor="#e0e0e0"
+temp10.style.fontWeight="bold"
+let anai = document.getElementById('anaimg')
+anai.src="images/analyse1.png"
+
+let temp =document.getElementById("finalhide")
+temp.style.display='none'
+let temp2= document.getElementById("finalhide2")
+temp2.style.display='none'
+let temp3= document.getElementById('finale1')
+let temp4=document.getElementById('dataPointsTable')
+let temp5=document.getElementById("finale2")
+/*
+width: 47%;
+    margin-top: 9px;
+    margin-left: 21px;
+    height: 75%;
+    display: flex;
+    flex-direction: column;*/
+temp5.style.width="50%"
+temp5.style.marginTop="150px"
+temp5.style.marginLeft='30px'
+temp5.style.height="fit-content"
+temp5.style.display="flex"
+temp5.style.flexDirection="column"
+let temp1715 = document.getElementById("myModal")
+    temp1715.style.paddingTop="30px"
+    temp1715.style.height="610px"
+let newtemp = document.getElementById("box")
+newtemp.style.height="640px"
+temp3.style.height="88%"
+temp3.style.width="50%"
+temp4.style.display=''
+temp4.style.marginTop='60px'
+temp4.style.marginLeft='50px'
+temp4.style.width="80%"
+temp3.innerHTML=`<header id="trainToTest" class="header-box">OBSERVATION TABLE</header>`
+temp3.appendChild(temp4)
+let temp6 = document.getElementById("finalshow")
+temp6.style.display=""
+let temp7= document.getElementById('print')
+let temp8= document.getElementById('retb')
+temp8.style.right="177px"
+temp8.style.display=""
+temp7.onclick=function(){window.print();}
+temp7.innerHTML="PRINT"
+temp5.innerHTML=`
+    <b style="color:white">
+    P(MALE | NEW INSTANCE) = ${new_instance_yes}
+    <br>
+    <br>
+    <br>
+    P(FEMALE | NEW INSTANCE) = ${new_instance_no}
+    <br>
+    <br>
+    <br></b>`
+if(new_instance_yes>new_instance_no){
+    temp5.innerHTML=temp5.innerHTML+`<b style="color:white">
+        P(MALE | NEW INSTANCE) > P(FEMALE | NEW INSTANCE)
+    <br>
+    <br>
+    <br>
+    {HEIGHT : ${target_dict[0]}, WEIGHT : ${target_dict[1]}, FOOT SIZE : ${target_dict[2]}, GENDER : <span style="color: #FF6600">MALE</span>}
+    <br>
+    <br>
+    <br><p style="color:#FF6600">
+        Therefore, the prediction is that a person with a height ${target_dict[0]} ft, weight ${target_dict[1]} lbs, and foot size ${target_dict[2]} in. will be MALE.</p></b>
+        `
+
+        Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, the prediction is that a person with a height ${target_dict[0]} ft, weight ${target_dict[1]} lbs, and foot size ${target_dict[2]} in. will be <span style="color:#FF6600"><b>MALE</b></span>.`,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+
+        let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+temp11[4].innerHTML="MALE"
+temp11[4].style.color="blue"
+
+}
+if(new_instance_yes<new_instance_no){
+    temp5.innerHTML=temp5.innerHTML+`<b style="color:white">P(FEMALE | NEW INSTANCE) > P(MALE | NEW INSTANCE)
+    <br>
+    <br>
+    <br>
+    {HEIGHT : ${target_dict[0]}, WEIGHT : ${target_dict[1]}, FOOT SIZE : ${target_dict[2]}, GENDER : <span style="color: #FF6600">FEMALE</span>}
+    <br>
+    <br>
+    <br><p style="color:#FF6600">
+        Therefore, the prediction is that a person with a height ${target_dict[0]} ft, weight ${target_dict[1]} lbs, and foot size ${target_dict[2]} in. will be FEMALE.</p></b></div>
+        `
+
+        Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, the prediction is that a person with a height ${target_dict[0]} ft, weight ${target_dict[1]} lbs, and foot size ${target_dict[2]} in. will be <span style="color:#FF6600"><b>FEMALE</b></span>.`,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+        let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+temp11[4].innerHTML="FEMALE"
+temp11[4].style.color="blue"
+    
+}
+if(new_instance_yes==new_instance_no){
+    temp5.innerHTML=temp5.innerHTML+`<b style="color:white">
+        P(MALE | NEW INSTANCE) == P(FEMALE | NEW INSTANCE)
+    <br>
+    <br>
+    <br>
+    {HEIGHT : ${target_dict[0]}, WEIGHT : ${target_dict[1]}, FOOT SIZE : ${target_dict[2]}, GENDER : <span style="color: #FF6600">?</span>}
+    <br>
+    <br>
+    <br><p style="color:#FF6600">
+        Therefore, the prediction is that the gender of a person with a height of ${target_dict[0]} ft, weight of ${target_dict[1]} lbs, and foot size of ${target_dict[2]} in. cannot be determined.</p></b>
+        `
+
+        Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, the prediction is that the gender of a person with a height of ${target_dict[0]} ft, weight of ${target_dict[1]} lbs, and foot size of ${target_dict[2]} in. cannot be determined.`,    
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+        let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+
+temp11[4].style.color="blue"
+
+}
+if(new_instance_yes==0 && new_instance_no==0){
+    temp5.innerHTML=temp5.innerHTML+`<b style="color:white">P(MALE | NEW INSTANCE) == P(FEMALE | NEW INSTANCE) == 0
+    <br>
+    <br>
+    <br>
+    {HEIGHT : ${target_dict[0]}, WEIGHT : ${target_dict[1]}, FOOT SIZE : ${target_dict[2]}, GENDER : <span style="color: #FF6600">?</span>}
+    <br>
+    <br>
+    <br><p style="color:#FF6600">
+        Therefore, the prediction is that a person with height ${target_dict[0]} ft, weight ${target_dict[1]} lbs, and foot size ${target_dict[2]}in. will be male or female cannot be determined.</p></b></div>
+        `
+
+        Swal.fire({
+      icon: 'info',
+      title: "PREDICTION",
+      html:`Therefore, the prediction is that a person with height ${target_dict[0]} ft, weight ${target_dict[1]} lbs, and foot size ${target_dict[2]}in. will be male or female cannot be determined.`,
+      allowOutsideClick: false,
+      target: '.container',
+      customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },    
+    });
+
+        let temp11= (document.getElementById("TOBOLD")).getElementsByTagName('td')
+temp11[4].style.color="#FF6600"
+}
+
+
+}
+function toreset2_2(){
+    if (tyre==1){
+        let temp=(document.getElementById(`${'hinm'+countin}`))
+    let temp2=(document.getElementById(`${'winm'+countin}`))
+    let temp3=(document.getElementById(`${'fsinm'+countin}`))
+    let temp3_1=(document.getElementById(`${'fsinm2'+countin}`))
+
+    temp.value=''
+    temp2.value=''
+    temp3.value=''
+    temp3_1.value=''
+    temp.style.border=""
+    temp2.style.border=""
+    temp3.style.border=""
+    temp3_1.style.border=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+uncheck7.checked=false
+let temp10= document.getElementById("forformule")
+    temp10.innerHTML=""
+
+    }
+    if (tyre==2){
+        let temp4=(document.getElementById(`${'hinf'+countin}`))
+    let temp5=(document.getElementById(`${'winf'+countin}`))
+    let temp6=(document.getElementById(`${'fsinf'+countin}`))
+    let temp6_1=(document.getElementById(`${'fsinf2'+countin}`))
+    temp4.value=''
+    temp5.value=''
+    temp6.value=''
+    temp6_1.value=''
+    temp4.style.border=""
+    temp5.style.border=""
+    temp6.style.border=""
+    temp6_1.style.border=""
+
+uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+uncheck7.checked=false
+let temp10= document.getElementById("forformule")
+    temp10.innerHTML=""
+
+}
+if (tyre==3){
+    countin=countin-1
+    let divte = document.getElementById('divte')
+
+    if(countin==1){
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {<span style="color: #FF6600">HEIGHT: ${rowii[1].innerText}</span>, WEIGHT : ${rowii[2].innerText}, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+    }
+    if(countin==2){
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {HEIGHT : ${rowii[1].innerText}, <span style="color: #FF6600">WEIGHT : ${rowii[2].innerText}</span>, FOOT SIZE : ${rowii[3].innerText}, GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+    }
+    if(countin==3){
+        divte.innerHTML=`<b>NEW INSTANCE</b> = {HEIGHT : ${rowii[1].innerText}, WEIGHT : ${rowii[2].innerText}, <span style="color: #FF6600">FOOT SIZE : ${rowii[3].innerText}</span> , GENDER : ${rowii[4].innerText}}<br><br><span style="color:#FF6600">Here,</span> x = ${target_dict[countin-1]}`
+    }
+
+    let temps=document.getElementById("submittotable")
+            temps.disabled=false
+            temps.style.cursor="pointer"
+            let tempn = document.getElementById("nexttotable")
+            tempn.disabled=true
+            tempn.style.cursor="not-allowed"
+    
+
+    let temp6 = document.getElementById("malefemalediv")
+    temp6.id="dynamicdiv"
+    
+    temp6.innerHTML=`<div  id=malefemalediv style="display: flex; align-items: center; justify-content: center; margin:0 auto; height: 160px; flex-direction: column;">
+    <div id=malediv style="font-weight: bold;   "> P (${eval('item'+countin)} | MALE) = <math style="font-weight: bold; font-size: 25px;">
+        <mfrac>
+                <mrow>
+                    <mn>1</mn>
+                </mrow>
+                <msqrt>
+                    <mi style="display:block">( 2π <input min="0" id="${'fsinm2'+countin}" type=number style='width:45px;text-align: center;' placeholder="σ²"> )</mi>
+                </msqrt>
+
+            </mfrac>
+            <mrow>
+                <msup>
+                    <mi>e</mi>
+
+                    <mfrac>
+                        <mrow>
+                            <mi style="display:block">- ( <input id="${'hinm'+countin}" type=number min="0" placeholder="x" style='width:35px;text-align: center;'> - <input min="0" id="${'winm'+countin}" type=number style='width:35px;text-align: center;' placeholder="μ"> )²</mi>
+                        </mrow>
+                        <mi style="display:block">( 2 <input min="0" id="${'fsinm'+countin}" type=number style='width:45px;text-align: center;' placeholder="σ²"> )</mi>
+                    </mfrac>
+
+                </msup>
+            </mrow>
+                            </math> 
+                            
+                              
+                              
+                            
+                            </div>
+                            <div id=femalediv style="display: flex; align-items: center; justify-content: center; margin:0 auto; height: 160px; font-weight: bold;margin-top:20px;">
+    <div> P (${eval('item'+countin)} | FEMALE) = <math style="font-weight: bold; font-size: 25px;">
+        <mfrac>
+                <mrow>
+                    <mn>1</mn>
+
+
+                </mrow>
+                <msqrt>
+                    <mi style="display:block">( 2π <input  min="0" id="${'fsinf2'+countin}" disabled=true type=number style='width:45px;text-align: center;cursor:not-allowed;' placeholder="σ²">)</mi>
+                </msqrt>
+
+            </mfrac>
+            <mrow>
+                <msup>
+                    <mi>e</mi>
+
+                    <mfrac>
+                        <mrow>
+                            <mi style="display:block">- ( <input min="0" id="${'hinf'+countin}" disabled=true type=number placeholder="x" disabled=true style='width:35px;text-align: center;cursor:not-allowed;'>  - <input  min="0" id="${'winf'+countin}" type=number disabled=true style='width:35px;text-align: center;cursor:not-allowed;' placeholder="μ"> )²</mi>
+                        </mrow>
+                        <mi style="display:block">( 2 <input  min="0" id="${'fsinf'+countin}" disabled=true type=number style='width:45px;text-align: center;cursor:not-allowed;' placeholder="σ²"> )</mi>
+                    </mfrac>
+
+                </msup>
+            </mrow>
+                            </math> 
+                            
+                             
+                            
+                            
+                            </div>
+                            </div>`
+                            if(countsubval==1 || countsubval==2){
+                                countsubval=1;
+                            }
+                            else if(countsubval==3 || countsubval==4){
+                                countsubval=3;
+                            }
+
+                            else if(countsubval==5 || countsubval==6){
+                                countsubval=5;
+                            }
+
+
+       
+        let temp4 = document.getElementById("secondtable")
+        let sectd=temp4.getElementsByTagName("td")
+      //  for ( let i =0 ; i<sectd.length;i++){
+   // sectd[i].style.color="white"}
+    if(countsubval==1){
+        let sectd=temp4.getElementsByTagName("td")
+        sectd[4].style.color='#FF6600'
+        sectd[5].style.color='#FF6600'
+        sectd[6].style.color='#FF6600'
+        sectd[7].style.color='#FF6600'
+    }
+    else if(countsubval==3){
+        let sectd=temp4.getElementsByTagName("td")
+        sectd[11].style.color='#FF6600'
+        sectd[12].style.color='#FF6600'
+        sectd[13].style.color='#FF6600'
+        sectd[14].style.color='#FF6600'
+    }
+    else if(countsubval==5){
+        let sectd=temp4.getElementsByTagName("td")
+        sectd[18].style.color='#FF6600'
+        sectd[19].style.color='#FF6600'
+        sectd[20].style.color='#FF6600'
+        sectd[21].style.color='#FF6600'
+    }
+                        }
+     
+                        let temp001= document.getElementById("forformule")
+    temp001.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+uncheck7.checked=false
+}
+
+
+function toreset(){
+    let temp=document.getElementById("addin")
+    let temp2=document.getElementById("negin")
+    temp.value=''
+    temp2.value=''
+    temp.style.border=""
+    temp2.style.border=""
+    let temp3= document.getElementById("forformule")
+    temp3.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+uncheck7.checked=false
+
+}
+function toreset_1(){
+    temp=document.getElementById("firsttable")
+    temp.innerHTML=`<div id=fidel style="position: absolute; top: -100px; margin-left: 120px;"></div>
+    <div id=addind style="margin-left: 120px; width: 200px;"><b>P(MALE)</b> = 
+        <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="6" min="0" type="number" id=addin style="width: 50px;text-align: center; " /></mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+        
+        </div>
+                        <div id=negind style="margin-left: 120px; margin-top: 20px; width: 220px;"> <b>P(FEMALE)</b> = 
+                            <math style="font-weight: bold; font-size: 25px; ">
+                                <mfrac>
+                                    <mrow>
+                                        <mn><input max="6" min="0" type="number" id=negin style="width: 50px;text-align: center; "/></mn>
+                                    </mrow>
+                    
+                                    <mi style="display:block">6</mi>
+                    
+                    
+                                </mfrac>
+                    
+                            </math>
+                     </div>
+`
+let temp7= document.getElementById("resettable")
+    temp7.onclick=function(){ toreset()}
+    let temp6= document.getElementById("submittotable")
+    temp6.disabled=false
+    temp6.style.cursor="pointer"
+    let temp5= document.getElementById("nexttotable")
+            temp5.disabled=true
+            temp5.style.cursor="not-allowed"
+            let temp3= document.getElementById("forformule")
+            uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+uncheck7.checked=false
+
+    temp3.innerHTML=""
+}       
+function toreset2(){
+    let temp3= document.getElementById("forformule")
+    temp3.innerHTML=""
+    uncheck3.checked=false
+    let temp = document.getElementById("secondtable")
+    temp.innerHTML=`                        <tr  style="  background-color: #e0e0e0;color:black">
+                            <td><b>FEATURE </td></b></td>
+                            
+                        <td><b>GENDER </b></td>
+                            
+                        <td>  <b>MEAN(μ) </b></td>
+                            
+                        <td> <b>VARIANCE(σ²)</b> </td>
+                            
+                            </tr>
+                        <tr><td rowspan="2">HEIGHT</td>
+                            <td>MALE</td>
+                            <td class="meanid">
+                                
+                            </td>
+                            <td class='varianceid'> </td>
+                        </tr>
+                            <tr>
+                                 <td>FEMALE</td>
+                            <td class="meanid">
+            
+                            </td>
+                            <td class='varianceid'>
+                                
+                            </td>
+                            </tr>
+                            <tr><td rowspan="2">WEIGHT</td>
+                                <td>MALE</td>
+                                <td class="meanid">
+                                    
+                                </td>
+                                <td class='varianceid'> </td>
+                            </tr>
+                                <tr>
+                                     <td>FEMALE</td>
+                                <td class="meanid">
+                                    
+                                </td>
+                                <td class='varianceid'>
+                                    
+                                </td>
+                                </tr>
+                                <tr><td rowspan="2">FOOT SIZE</td>
+                                    <td>MALE</td>
+                                    <td class="meanid">
+                                        
+                                    </td>
+                                    <td class='varianceid'></td>
+                                </tr>
+                                    <tr>
+                                         <td>FEMALE</td>
+                                    <td class="meanid">
+                                        
+                                    </td>
+                                    <td class='varianceid'>
+                                        
+                                    </td>
+                                    </tr>`
+                                    q=document.getElementById("meanbt")
+            q.disabled=false
+            q.style.cursor="pointer"
+            o=document.getElementById("variancebt")
+            o.disabled=true
+            o.style.cursor="not-allowed"
+
+}
+function toreset3(){
+    let temp10= document.getElementById("forformule")
+    temp10.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+uncheck7.checked=false
+    if(thficount==1){
+        let fitemp11=document.getElementById('no')
+let fitemp21=document.getElementById('nocolor')
+let fitemp31=document.getElementById('notype')
+let fitemp41=document.getElementById('noorigin')
+fitemp11.value=''
+fitemp21.value=''
+fitemp31.value=''
+fitemp41.value=''
+
+fitemp11.style.border=""
+fitemp21.style.border=""
+fitemp31.style.border=""
+fitemp41.style.border=""
+
+let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+    }
+    if(thficount==0){
+        let fitemp11=document.getElementById('yes')
+let fitemp21=document.getElementById('yescolor')
+let fitemp31=document.getElementById('yestype')
+let fitemp41=document.getElementById('yesorigin')
+fitemp11.value=''
+fitemp21.value=''
+fitemp31.value=''
+fitemp41.value=''
+
+
+fitemp11.style.border=""
+fitemp21.style.border=""
+fitemp31.style.border=""
+fitemp41.style.border=""
+
+
+let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+    }
+}
+function toreset3_1(){
+    temp10=document.getElementById('addind')
+    temp10.innerHTML="<b style='color:#FF6600'>P(MALE | NEW INSTANCE)</b> = <br> <input id=yes placeholder = 'P(MALE)' type=number  min=0 style='width:62px;text-align: center;'> * <br> <input id=yescolor placeholder = 'P(HEIGHT|MALE)' type=number max=10 min=0 style='width:114px;text-align: center;'> * <input id=yestype placeholder = 'P(WEIGHT|MALE)' type=number max=10 min=0 style='width:117px;text-align: center;'> * <input id=yesorigin placeholder = 'P(FOOT SIZE|MALE)' type=number max=10 min=0 style='width:130px;text-align: center;'>"
+    let temp11=document.getElementById("negind")
+    temp11.innerHTML="P(FEMALE | NEW INSTANCE) = <br> <input id=no placeholder = 'P(FEMALE)'type=number  min=0 disabled=true style='width:77px;text-align: center;cursor:not-allowed;'> * <br> <input id=nocolor placeholder = 'P(HEIGHT|FEMALE)' type=number max=10 min=0 disabled=true style='width:130px;text-align: center;cursor:not-allowed;'> * <input id=notype placeholder = 'P(WEIGHT|FEMALE)' type=number max=10 min=0 disabled=true style='width:133px;text-align: center;cursor:not-allowed;'> * <input id=noorigin placeholder = 'P(FOOT SIZE|FEMALE)' type=number disabled=true max=10 min=0 style='width:144px;text-align: center;cursor:not-allowed;'>"
+    let temp6= document.getElementById("submittotable")
+    temp6.disabled=false
+    temp6.style.cursor="pointer"
+    thficount=0
+    let temp17 = document.getElementById("divcshow")
+    temp17.innerHTML=''
+    let temp90=document.getElementById("one")
+temp90.checked=false
+let temp91=document.getElementById("two")
+temp91.checked=false
+
+let temp001= document.getElementById("forformule")
+    temp001.innerHTML=""
+    uncheck3.checked=false
+uncheck4.checked=false
+uncheck5.checked=false
+uncheck6.checked=false
+uncheck7.checked=false
+    addlike=1
+}
+
+
+
+
+function addprior(){
+    let temp21 = document.getElementById("divcshow")
+    if(addlike ==0){
+    temp21.innerHTML=`<div style="display:flex;justify-content: space-around;width: 100%;flex-direction: column;align-items: center;height: 60%;">
+<div style="font-weight: bold; font-size: 25px;">P(MALE) = ${(formale/6).toFixed(2)}</div>                
+<div style="font-weight: bold; font-size: 25px;">P(FEMALE) = ${(forfemale/6).toFixed(2)}</div>
+</div>`}
+if(addlike ==1){
+    temp21.innerHTML=`<div style="display:flex;justify-content: space-around;width: 100%;flex-direction: column;align-items: center;height: 60%;">
+        <span style="color: #FF6600"><div style="font-weight: bold; font-size: 25px;">P(MALE) = ${(formale/6).toFixed(2)}</div> </span>               
+<div style="font-weight: bold; font-size: 25px;">P(FEMALE) = ${(forfemale/6).toFixed(2)}</div>
+</div>`}
+if(addlike ==2){
+    temp21.innerHTML=`<div style="display:flex;justify-content: space-around;width: 100%;flex-direction: column;align-items: center;height: 60%;">
+<div style="font-weight: bold; font-size: 25px;">P(MALE) = ${(formale/6).toFixed(2)}</div>                
+<span style="color: #FF6600"><div style="font-weight: bold; font-size: 25px;">P(FEMALE) = ${(forfemale/6).toFixed(2)}</div></span>
+</div>`}
+  
+}
+function addlikelihood(){
+    let temp21 = document.getElementById("divcshow")
+    if(addlike ==0){
+    temp21.innerHTML=`<p>
+        <b>P(HEIGHT | MALE ) = ${likelihood[0]}</b></p>
+        <p>
+            <b>P(HEIGHT | FEMALE ) = ${likelihood[1]}</b></p>
+        <p>
+            <b>P(WEIGHT | MALE ) = ${likelihood[2]}</b></p>
+        <p>
+            <b>P(WEIGHT | FEMALE ) = ${likelihood[3]}</b></p>
+        <p>
+            <b>P(FOOT SIZE | MALE ) = ${likelihood[4]}</b></p>
+        <p>
+            <b>P(FOOT SIZE | FEMALE ) = ${likelihood[5]}</b></p>`
+        }
+    if(addlike ==1){
+    temp21.innerHTML=`<p>
+        <b><span style="color: #FF6600">P(HEIGHT | MALE ) = ${likelihood[0]}</b></span></p>
+        <p>
+            <b>P(HEIGHT | FEMALE ) = ${likelihood[1]}</b></p>
+        <p>
+            <span style="color: #FF6600"><b>P(WEIGHT | MALE ) = ${likelihood[2]}</b></span></p>
+        <p>
+            <b>P(WEIGHT | FEMALE ) = ${likelihood[3]}</b></p>
+        <p>
+            <span style="color: #FF6600"><b>P(FOOT SIZE | MALE ) = ${likelihood[4]}</b></span></p>
+        <p>
+            <b>P(FOOT SIZE | FEMALE ) = ${likelihood[5]}</b></p>`
+        }
+        if(addlike ==2){
+    temp21.innerHTML=`<p>
+        <b>P(HEIGHT | MALE ) = ${likelihood[0]}</b></p>
+        <p>
+            <span style="color: #FF6600"><b>P(HEIGHT | FEMALE ) = ${likelihood[1]}</b></span></p>
+        <p>
+            <b>P(WEIGHT | MALE ) = ${likelihood[2]}</b></p>
+        <p>
+            <span style="color: #FF6600"><b>P(WEIGHT | FEMALE ) = ${likelihood[3]}</b></span></p>
+        <p>
+            <b>P(FOOT SIZE | MALE ) = ${likelihood[4]}</b></p>
+        <p>
+            <span style="color: #FF6600"><b>P(FOOT SIZE | FEMALE ) = ${likelihood[5]}</b></span></p>`
+        }
+  
+}  
+
+
+
+       
+        </script>
+        
+        <script>
+            function priorf()
+            {
+                let temp=document.getElementById("forformule")
+                temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">P(A) </span> =
+                                    <math style="font-weight: bold; font-size: 25px; ">
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>Number of A (occurrence)</mn>
+                                            </mrow>
+                                            <mn>N</mn>
+                                        </mfrac>
+                                    </math> 
+                                </div>  <br>
+                                <div style=" padding-left: 10px; font-size: medium; ">
+                                   <span style="color:#FF6600">where,</span><br>
+                                    <b>A</b> = event,<br>
+                                    <b>N</b> = total observation (trained).
+                                    
+                                </div>`
+            }
+            function meanf(){
+                let temp=document.getElementById("forformule")
+                temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">MEAN(μ) </span> =
+                                    <math style="font-weight: bold; font-size: 25px; ">
+                                        <mfrac>
+                                            <mrow>
+                                                <mn>Σ(x)</mn>
+                                            </mrow>
+                                            <mn>N</mn>
+                                        </mfrac>
+                                    </math> 
+                                </div>  <br>
+                                <div style=" padding-left: 10px; font-size: medium; ">
+                                    <span style="color:#FF6600">where,</span><br>
+                                    <b>Σ(x)</b> = sum of all the individual values in the dataset,<br>
+                                    <b>N</b> = total number of values in the dataset.
+                                </div>`
+   
+            }
+            function variancef(){
+                let temp=document.getElementById("forformule")
+                temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">Variance (σ²) </span> =
+                    <math style="font-weight: bold; font-size: 25px; ">
+        <mfrac>
+          <mrow>
+            <mn> Σ((x - μ)²)
+                </mn>
+          </mrow>
+          <mn>N-1</mn>
+        </mfrac>
+    </math> </div><br>
+    <div style=" padding-left: 10px; font-size: medium; ">
+        <span style="color:#FF6600">where,</span><br>
+        <b>Σ((x - μ)²)</b> = 
+    the sum of squared differences between each value (x) in the dataset and the mean (μ),<br>
+        <b>N</b> = total number of values in the dataset.</div>`
+   
+            }
+
+            function naivebayes(){
+                let temp=document.getElementById("forformule")
+                temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">P(C|X) </span> =
+                    <math style="font-weight: bold; font-size: 25px; ">
+        <mfrac>
+          <mrow>
+            <mn> (P(C) * P(X|C))
+                </mn>
+          </mrow>
+          <mn>P(X)</mn>
+        </mfrac>
+    </math> </div><br>
+    <div style=" padding-left: 10px; font-size: medium; ">
+        <span style="color:#FF6600">where,</span><br>
+        <b>P(C|X)</b> = conditional probability of event or condition C given event or condition X,<br>
+            <b>P(X|C)</b> =  conditional probability of event or condition X given event or condition C,
+                <b>P(C)</b> = Probability of condition C,<br>
+                    <b>P(X)</b> = Probability of condition X.</div>`
+        
+            }
+
+            function ndb(){
+                let temp=document.getElementById("forformule")
+                temp.innerHTML=`<div style="font-weight: bold;  font-size: large; "><span style="color:#FF6600">P(X|C) </span> = 
+                    <math style="font-weight: bold; font-size: 25px; ">
+                        <mfrac>
+                <mrow>
+                    <mn>1</mn>
+
+
+                </mrow>
+                <msqrt>
+                    <mi>(2πσ²)</mi>
+                </msqrt>
+
+            </mfrac>
+            <mrow>
+                <msup>
+                    <mi>e</mi>
+
+                    <mfrac>
+                        <mrow>
+                            <mi>-(x - μ)²</mi>
+                        </mrow>
+                        <mi>(2σ²)</mi>
+                    </mfrac>
+
+                </msup>
+            </mrow>
+    </math> </div> 
+    <div style=" padding-left: 10px; font-size: medium; ">
+        <span style="color:#FF6600">where,</span><br>
+    <b>x</b> = specific value of X for which you want to evaluate the conditional probability density,<br>
+    <b>μ</b> = mean of the distribution,<br>
+    <b>σ²</b> = variance of the distribution,<br>
+    <b>e</b> = approximately equal to ${(Math.E).toFixed(2)},<br>
+    <b>π</b> = approximately equal to ${(Math.PI).toFixed(2)}.
+</div>`
+   
+            }
+        </script>
+        <script src="js/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script>
+            localStorage.removeItem('objectToPass')
+
+
+
+const pageAccessedByReload = (
+  (window.performance.navigation && window.performance.navigation.type === 1) ||
+    window.performance
+      .getEntriesByType('navigation')
+      .map((nav) => nav.type)
+      .includes('reload')
+);
+if(pageAccessedByReload==true){
+    window.location.href="index.html"
+}
+//         </script>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+   
+    </div>
+
+</body>
+
+</html>
