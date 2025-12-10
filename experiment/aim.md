@@ -1,1 +1,1 @@
-### Aim of the experiment
+#### To learn and perform the working of Naive-Bayes Classifier.
