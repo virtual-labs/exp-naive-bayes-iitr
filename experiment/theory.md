@@ -4,7 +4,9 @@ Bayes' theorem, named after the Reverend Thomas Bayes, is a fundamental concept 
 
 The theorem states:<br>
 
-<center><b>P(A|B) = (P(A)*P(B|A)) / P(B)</b></center><br>
+<center>  
+<img style="mix-blend-mode: darken;" src="images\img_1.jpg" alt="Working of Find-S Algorithm">
+</center><br>
 
 where,<br>
 &nbsp;&nbsp;&nbsp;P(A|B) is the posterior probability of event A given event B has occurred.<br>
