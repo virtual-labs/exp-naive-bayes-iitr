@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/style.css" />
+
+</head>
+
+<body>
+    <div class="container" id="box">
+        <!-- Instructions -->
+        <div id="myModal" class="modal" style="padding-top: 30px;height: 600px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">×</span>
+                    <h2>Instructions</h2>
+                </div>
+                <div class="modal-body">
+                    
+                    <p>
+                        <ol type="1" style="font-size: 18px; text-align: justify;color:black">
+                            <li>Provide a value for each attribute and then click the <b>ADD</b> button to input these values into the table.</li>
+                            <li>Repeat step 1 until the trained dataset contains a total of 6 rows.</li>
+                            <li>Now, enter a value for each attribute to test the algorithm, and then click the <b>ADD</b> button.</li>
+                            <li>Now, click on the <b>NEXT</b> button to initiate the computation phase for the Naive Bayes model.</li>
+                            <li>Enter the occurrences of 'YES' and 'NO' from the DATASET to calculate <span style="color:#FF6600">Prior Probabilities</span>, then click <b>SUBMIT</b>.</li>
+                            <li>Now, click on the <b>NEXT</b> button to calculate <span style="color:#FF6600">Likelihood Probabilities</span>.</li>
+                            <li>Enter the occurrences of each attribute based on their classes in the 'YES' column of the <b>CALCULATION</b> table, and then click the <b>SUBMIT</b> button.</li>
+                            <li>Repeat step 7 for the 'NO' column and click on the <b>NEXT</b> button.</li>
+                            <li>If, zero values are present for any likelihood probability, the <b>Laplace Smoothing</b> section will appear.</li>
+                            <li>Otherwise, calculate the <span style="color:#FF6600">Posterior Probabilities</span> by entering the required fields for <b>P(YES|NEW INSTANCE)</b> and then click on the <b>SUBMIT</b> button.</li>
+                            <ul>
+                                <li>Click on the 'Prior Probability' tab given on the left side of the page to view the required values.</li>
+                                <li>Next, click on the 'Likelihood Probability' tab and and observe the necessary values.</li>
+                            </ul>
+                            <li>Repeat the above step to find <b>P(NO|NEW INSTANCE)</b>.</li>
+                            <li>After submitting their values, click on <b>NEXT</b> button to know the final result.</li>
+                        </ol>
+                        
+                        </p>
+
+                </div>
+                <div class="modal-footer">
+                    <br>
+                </div>
+            </div>
+        </div>
+
+        <!-- header -->
+        <header class="header">
+            <div class="tabs">
+                <!-- tabs -->
+                <div id="tab-1"
+                style="display: flex; border-right: 2px solid black; background-color: #e0e0e0;
+                color: black;cursor:not-allowed; border-top-left-radius: 10px;">
+                <div class="tab-create" style="background-color: #e0e0e0;cursor:not-allowed;">
+                    <a  class="tab-text" style="color: black;font-weight: bold;cursor:not-allowed;"> CREATE</a>
+                </div>
+                <img src="images/create1.png" style="margin-top: 3px; margin-right: 10px; height: 85%" alt="">
+
+            </div>
+                <div id="tab-2" style="display: flex; border-right: 2px solid black; color: white;cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+
+                        COMPUTE
+                    </div>
+                    <img src="images/calculator.png"
+                        style="margin-top: 3px; margin-right: 10px; height: 85%;cursor:not-allowed;" id="calImg" alt="">
+                </div>
+                <div id="tab-3"
+                    style="display: flex; border-right: 2px solid black; color: white; cursor:not-allowed;">
+                    <div class="tab-create" style="cursor:not-allowed;">
+                        ANALYZE
+                    </div>
+                    <img src="images/analyse.png" style="margin-top: 3px; margin-right: 10px; height: 85%" alt="">
+
+                </div>
+            </div>
+            <a class="header-text" id="myBtn" style="padding-top: 8px" href="#">INSTRUCTIONS</a>
+        </header>
+
+        <div class="sec-con-container">
+            <div class="sec-con-column">
+                <!-- controls -->
+                <div class="training-left-side-container">
+                    <div class="sub-div-control" id="training-control">
+                        <header id="trainToTest" class="header-box">ATTRIBUTES</header>
+                        <div class="control-panel">
+                            <div class="Data-set-x-value-input-container">
+                                <b>COLOR</b>  <span style="position: relative;
+                                ">:</span> 
+                                <select class="input-control" id="colora" style="width: 128px;position: relative;
+                                left: -2.5px;">
+                                    <option value='NULL'>NULL</option>
+                                    <option value="Black">Black</option>
+                                    <option value="Brown">Brown</option>
+                                </select>
+                            </div>
+                            <div class="Data-set-x-value-input-container">
+                                <b>TYPE</b>  <span style="position: relative;
+                                    left: 8px;">:</span> 
+                                <select class="input-control" id="typea" style="width: 128px;">
+                                    <option value='NULL'>NULL</option>
+                                    <option value="MUV">MUV</option>
+                                    <option value="SUV">SUV</option>
+                                </select>
+                            </div>
+                            <div class="Data-set-x-value-input-container">
+                               <b>ORIGIN</b>  <span style="position: relative;
+                              left: -1px;">:</span> 
+                                <select class="input-control" id="origina" style="width: 128px;position: relative;
+                                left: -3px;">
+                                    <option value='NULL'>NULL</option>
+                                    <option value="Domestic">Domestic</option>
+                                    <option value="Imported">Imported</option>
+                                </select>
+                            </div>
+                            <div id=target class="Data-set-x-value-input-container">
+                                <b>STOLEN</b>  <span style="position: relative;
+                                left: -3px;">:</span>
+                                <select class="input-control" id="stolena" style="width: 128px;    position: relative;
+                                left: -3.5px;">
+                                    <option value='NULL'>NULL</option>
+                                    <option value='Yes'>Yes</option>
+                                    <option val="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-panel-button-container">
+                        <input class="button" type="button" id="add-button" onclick="populateDataPointsTable()"
+                            value="ADD" style="margin-left: 3px;" />
+                        <input class="button" id='reset' type="button" value="RESET" title="clear the inserted data." disabled onclick="window.location.href='training.html'"
+                            style="margin-left: 3px;" />
+                            <input class="button" type="button" value="NEXT" id="NEXT" onclick="thenextbutton()" disabled = true ; style="margin-left: 3px; cursor: not-allowed;" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- table -->
+            <div class="sec-con-table">
+                <div class="sub-div-table">
+                    <header class="header-box">DATASET</header>
+                    <div id="tablesContainer" >
+                        <table id="dataPointsTable">
+                            <thead>
+                                <tr style="background-color: #d8e9f0;">
+                                    <th>S.No</th>
+                                    <th>COLOR</th>
+                                    <th>TYPE</th>
+                                    <th>ORIGIN</th>
+                                    <th>STOLEN</th>
+                                    <th class="tobedeleated">DELETE</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="for7">
+                                <!-- Data point coordinates will be dynamically populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <footer class="footer">
+            <span class="footer-text">© 2023 Virtual Labs, IIT Roorkee</span>
+        </footer>
+        
+        <script src="js/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"> </script>
+        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script>const pageAccessedByReload = (
+            (window.performance.navigation && window.performance.navigation.type === 1) ||
+              window.performance
+                .getEntriesByType('navigation')
+                .map((nav) => nav.type)
+                .includes('reload')
+          );
+          if(pageAccessedByReload==true){
+              window.location.href="index.html"
+          }
+          Swal.fire({
+            icon: 'info',
+            html: 'Create the TRAINING dataset!!',
+            allowOutsideClick: false,
+            target: '.container',
+           customClass: {
+            container: "position-absolute",
+            popup: "swal-popup",
+            title: "swal-title",
+            content: "swal-content",
+        },
+        });
+
+        document.querySelector('.container').style.backgroundImage = 'none'; 
+          </script>
+    </div>
+
+</body>
+
+</html>
