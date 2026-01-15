@@ -6,5 +6,6 @@
 2. Domingos, Pedro; Pazzani, Michael (1997), <i>"On the optimality of the simple Bayesian classifier under zero-one loss"</i>, Machine Learning. 29 (2/3) (pp.103–137), Springer Science+Business Media.
 3. Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze, <i>"Introduction to Information Retrieval"</i>, Text Classification and Naive Bayes (pp. 253–287), Cambridge University Press.
 4. Mitchell, T. M. (1997), <i>"Machine Learning"</i>, Naive Bayes Learning (pp. 154–200), McGraw‐Hill.
-                
+5. Haru C. Aggarwal, “Data Mining: The Textbook,” Springer, 2015.(chapter 8)
+
 </div>
